@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="button" value="设置" id="setBtn">
+	<select name="" id="cities">
+	<option value="1">北京</option>
+	<option value="2">深圳</option>
+	<option value="3">上海</option>
+	<option value="4">广州</option>
+	<option value="5">成都</option>
+	</select>
+	<script>
+	var setBtn = document.getElementById('setBtn')
+	setBtn.onclick = function(){
+		var cities = document.getElementById('cities')
+		var options = document.getElementsByTagName('option')
+
+		var randomIndex = parseInt(Math.random() * options.length);
+		var option = options[randomIndex]
+		option.selected = true;
+	}
+	</script>
+</body>
+</html>

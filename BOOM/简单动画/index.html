@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	#box{
+		position: relative;
+		background-color: tan;
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+	}
+	</style>
+</head>
+<body>
+	<input type="button" value="开始" id="btn">
+	<div id="box"></div>
+	<script>
+	//1.点击右移动
+	var btn = document.getElementById('btn')
+	var box = document.getElementById('box')
+	btn.onclick = function(){
+		var timeId = setInterval(function(){
+			//最终停止位置
+			var target = 880;
+			//步进
+			var step = 8;
+			if(box.offsetLeft >= target){
+				//停止定时器
+				clearInterval(timeId)
+				//设置横坐标
+				box.style.left = target + 'px'
+				// console.log(box.style.left)
+				//退出函数
+				return;
+			}
+			box.style.left = box.offsetLeft + step + 'px'
+			console.log(box.style.left)
+		},30)
+	}
+	</script>
+</body>
+</html>

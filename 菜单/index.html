@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	#menu ul li{
+		list-style-type: none;
+		width: 80px;
+		height: 30px;
+		line-height: 30px;
+		background-color: tan;
+		text-align: center;
+		float: left;
+		margin-left: 15px;
+	}
+	#menu ul li.now{
+		background-color: orange;
+	}
+	#menu ul li a {
+		text-decoration: none;
+	}
+	</style>
+</head>
+<body>
+	<div id="menu">
+		<ul>
+			<li class="now"><a href="javascript:void(0)">首页</a></li>
+			<li><a href="javascript:undefined">第一页</a></li>
+			<li><a href="javascript:void(0)">第二页</a></li>
+			<li><a href="javascript:void(0)">第三页</a></li>
+			<li><a href="javascript:void(0)">第四页</a></li>
+		</ul>
+	</div>
+	<script>
+	function my$(id){
+		return document.getElementById(id)
+	}
+	var menu = my$('menu')
+	var ul =  getFirstElementChild(menu)
+	for(var i = 0; i < ul.children.length;i++){
+		var li  = ul.children[i]
+		//获取li中的a标签
+		var link = getFirstElementChild(li)
+		//函数赋给onclick
+		link.onclick = linkClick;	
+	}
+	function linkClick(){
+		//取消所有li高亮
+		for(var i = 0; i < ul.children.length; i++){
+			var li = ul.children[i]
+			li.className = ''
+		}
+		this.parentNode.className = 'now'
+		//取消后续的执行
+		return false;
+	}
+	  // 处理浏览器兼容性
+      // 获取第一个子元素
+function getFirstElementChild(element) {
+    var node, nodes = element.childNodes, i = 0;
+    while (node = nodes[i++]) {
+        if (node.nodeType === 1) {
+            return node;
+        }
+    }
+    return null;
+}
+	</script>
+</body>
+</html>

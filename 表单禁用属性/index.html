@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="button" value="点击" id="btn1">
+	<input type="button" value="设置文本框" id="btn2">
+	<br>
+	<input type="text" id="text" >
+	<script>
+	var btn1 = document.getElementById('btn1')
+	btn1.onclick = function(){
+		var text = document.getElementById('text')
+		console.log(text.value)
+		console.log(text.type)
+		console.log(text.disabled)
+		//标签的属性，只有一个值的时候DOM中对应的元素的属性值是布尔类型
+		text.disabled = true;
+	}
+	var btn2 = document.getElementById('btn2')
+	btn2.onclick = function(){
+		var text = document.getElementById('text')
+		text.value = '你好,请输入密码'
+	}
+	</script>
+</body>
+</html>

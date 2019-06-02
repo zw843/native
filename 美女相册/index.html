@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	body{
+		color: #5c5c5c;
+		background-color: tan;
+		font-family: '微软雅黑';
+		margin-left: 30%;
+	}
+	a{
+		color: #000;
+		text-decoration: none;
+	}
+
+	#list a{
+	margin: 0px 30px 30px 0;
+	padding: 0;
+	}
+	#img{
+		opacity: 0;
+	}
+	</style>
+</head>
+<body>
+	<h2>美女相册</h2>
+	<div id="list">
+		<a href="img/1.jpg" title="美女A"><img src="img/1-small.jpg" width="100px" alt="美女1"></a>
+		<a href="img/2.jpg" title="美女B"><img src="img/2-small.jpg" width="100px" alt="美女2"></a>
+		<a href="img/3.jpg" title="美女C"><img src="img/3-small.jpg" width="100px" alt="美女3"></a>
+		<a href="img/4.jpg" title="美女D"><img src="img/4-small.jpg" width="100px" alt="美女4"></a>
+	</div>
+	<!-- <div style="clear:both"></div> -->
+	<img id="img" src="img/placeholder.png" width="450px" alt="">
+	<p id="chose">选择一个图片</p>
+	<script>
+	var list = document.getElementById('list')
+	var links = document.getElementsByTagName('a')
+	for(var i = 0; i < links.length; i++){
+		var link = links[i];
+		link.onclick = function(){
+			// alert('a');
+			var img = document.getElementById('img')
+			img.src=this.href;
+			img.style.opacity=1;
+			var chose = document.getElementById('chose')
+			// console.dir(chose)
+			chose.innerText = this.title;
+			return false;
+		} 
+	}
+	// console.log(link)
+	</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="button" value="按钮" id="btn">
+	<div id="box"></div>
+	<div id="boxs"></div>
+	<script>
+	var p = document.createElement('p')
+	p.innerHTML = 'ok'
+	p.style.color = 'tan'
+	
+	var datas = [ '语文', '数学', '英语','化学','物理']
+	var btn = document.getElementById('btn')
+	//动态创建列表方法一
+	btn.onclick = function(){
+		var box = document.getElementById('box')
+		// box.innerHTML = 'Hello world'
+		// box.appendChild(p);
+		var array = [];
+		array.push('<ul>')
+		for(var i = 0; i < datas.length; i++){
+			var data = datas[i]
+			array.push('<li>' + data + '</li>'); 
+		}
+		array.push('</ul>')
+		box.innerHTML = array.join('') + 'Hello world'
+		box.appendChild(p); 
+	}
+	//动态创建列表方法二
+	function my$(id){
+		return document.getElementById(id)
+	}
+	my$('btn').onclick = function(){
+		 // 动态创建ul，内存中创建对象
+		var ul = document.createElement('ul')
+		// 把ul 放到页面上    把ul放到DOM树上，并且会重新绘制
+		my$('box').appendChild(ul)
+		for(var i = 0; i < datas.length; i++){
+			var data = datas[i]
+			// 在内存中动态创建li
+			var li = document.createElement('li')
+			ul.appendChild(li)
+			//设置li中显示内容
+			setInnerText(li,data)
+
+
+
+			li.onmouseover = liMouseOver;
+			li.onmouseout = liMouseOut;
+		}
+	}
+	function liMouseOver(){
+		this.style.backgroundColor = 'tan'
+	}
+	function liMouseOut(){
+		this.style.backgroundColor = ''
+	}
+	// 处理innerText和textContent的兼容性问题
+    // 设置标签之间的内容
+function setInnerText(element, content) {
+  // 判断当前浏览器是否支持 innerText
+  if (typeof element.innerText === 'string') {
+    element.innerText = content;
+  } else {
+    element.textContent = content;
+  }
+}
+	</script>
+	<script>
+	function my$(id){
+		return document.getElementById(id)
+	}
+	//动态创建表格
+	//1.搭建结构 2.书写样式 3.遍历创建数据
+	var headDatas = ['姓名','科目','成绩','其他']
+	var lists = [
+		{name:'zs',科目:'语文',分数:'90'},
+		{name:'zs',科目:'语文',分数:'90'},
+		{name:'zs',科目:'语文',分数:'90'},
+		{name:'zs',科目:'语文',分数:'90'},
+		{name:'zs',科目:'语文',分数:'90'}
+	]
+	//创建元素
+	var table = document.createElement('table')
+	my$('boxs').appendChild(table)
+
+	table.border = '1px'
+	table.width = '300px'
+	//创建表头
+	var thead = document.createElement('thead')
+	table.appendChild(thead)
+	var tr = document.createElement('tr')
+	thead.appendChild(tr)
+
+	tr.style.height = '40px'
+	tr.style.backgroundColor = 'tan'
+
+	// var th = document.createElement('th')
+	// tr.appendChild(th)
+	// setInnerText(th,'姓名')
+	// var th = document.createElement('th')
+	// tr.appendChild(th)
+	// setInnerText(th,'科目')
+	// var th = document.createElement('th')
+	// tr.appendChild(th)
+	// setInnerText(th,'成绩')
+	for(var i = 0; i< headDatas.length; i++){
+		var th = document.createElement('th')
+		tr.appendChild(th)
+		setInnerText(th,headDatas[i])
+	}
+
+	//创建数据行
+	var tbody = document.createElement('tbody')
+	table.appendChild(tbody)
+	for(var i = 0; i <lists.length; i++){
+		var list = lists[i]
+		tr = document.createElement('tr')
+		tbody.appendChild(tr)
+
+			//遍历对象
+	for(var key in list){
+		var td = document.createElement('td')
+		tr.appendChild(td)
+		setInnerText(td,list[key])
+	}
+
+	//创建删除列
+	td = document.createElement('td')
+	tr.appendChild(td)
+	//删除超链接
+	var link = document.createElement('a')
+	td.appendChild(link)
+	link.href = 'javascript:void(0)'
+	setInnerText(link,'删除')
+
+	link.onclick = linkDelete;
+	}
+
+	function linkDelete(){
+		//获取删除行 a<td<tr 
+	 var tr = this.parentNode.parentNode;
+	 tbody.removeChild(tr)
+	 return false;
+	}
+
+
+
+	// 处理innerText和textContent的兼容性问题
+// 设置标签之间的内容
+function setInnerText(element, content) {
+  // 判断当前浏览器是否支持 innerText
+  if (typeof element.innerText === 'string') {
+    element.innerText = content;
+  } else {
+    element.textContent = content;
+  }
+}
+	</script>
+</body>
+</html>

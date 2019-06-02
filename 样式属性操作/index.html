@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.type{
+		background-color: orange;
+
+	}
+	</style>
+</head>
+<body>
+	<input type="button" id="btn" value="点点点">
+	<br>
+	<input type="text" id="text">
+	<script>
+	//根据id获取元素 封装函数
+	function my$(id){
+		return document.getElementById(id)
+	}
+	my$('btn').onclick=function(){
+		my$('text').className = 'type'
+	}
+	my$('btn').onclick=function(){
+		var text = my$('text')
+		text.style.backgroundColor = 'tan';
+		text.style.width = '300px';
+		text.style.height = '300px'
+		text.style.borderRadius = '50%';
+		text.style.marginLeft = '30%'
+	}
+	console.log(text.id)
+	//获取属性值
+	console.log(btn.getAttribute('value'))
+	console.log(text.getAttribute('type'))
+	//移除属性
+	btn.removeAttribute('value')
+	console.log(btn.getAttribute('value'))
+	//设置属性
+	text.setAttribute('value','设置属性')
+	console.log(text.getAttribute('value'))
+	</script>
+</body>
+</html>

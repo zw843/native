@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	ul{
+		list-style-type: none;
+	}
+	.box{
+		width: 600px;
+		height: 400px;
+		border: 1px solid #5c5c5c;
+		margin: 100px auto;
+		overflow: hidden;
+	}
+	.title{
+		height: 50px;
+	}
+	.title span{
+		display: inline-block;
+		width: 100px;
+		background-color: tan;
+		line-height: 60px;
+		text-align: center;
+		cursor: pointer;
+	}
+	.title span.now{
+		background-color: orange;
+	}
+	.content div{
+		height: 350px;
+		background-color: orange;
+		display: none;
+	}
+	.content div.now{
+		display: block;
+	}
+	</style>
+</head>
+<body>
+	<div class="box">
+	<div class="title" id="title">
+		<span class="now">艺术</span>
+		<span>音乐</span>
+		<span>科学</span>
+		<span>体育</span>
+	</div>
+	<div class="content" id="content">
+		<div class="now">艺术欣赏</div>
+		<div>音乐鉴赏</div>
+		<div>科学思考</div>
+		<div>体育锻炼</div>
+	 </div>
+	</div>
+	<script>
+	function my$(id){
+		return document.getElementById(id)
+	}
+	//鼠标经过 高亮显示
+	var title = my$('title')
+	var spans = title.getElementsByTagName('span')
+	for(var i = 0; i < spans.length; i++){
+		var span = spans[i]
+		//自定义属性,记录当前索引
+		span.setAttribute('index',i)
+		//注册事件
+		span.onmouseover = fn;
+	}
+	//鼠标经过处理函数
+	function fn(){
+		//取消所有高亮
+		for(var i = 0; i < spans.length; i++){
+			var span = spans[i]
+			span.className = ''
+		}
+		//当前高亮
+		this.className = 'now'
+
+		//tab对应div显示 其他隐藏
+		//隐藏所有div
+		var content = my$('content')
+		var divs = content.getElementsByTagName('div')
+		for(var i = 0; i < divs.length; i++){
+			var div = divs[i]
+			div.className = '';
+		}
+		//当前span对应div显示
+		//获取自定义属性值
+		var index = parseInt(this.getAttribute('index'))
+		divs[index].className = 'now'
+		
+	}
+	</script>
+</body>
+</html>

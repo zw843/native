@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.border{
+		border: 1px solid red;
+	}
+	</style>
+</head>
+<body>
+	<input type="text" id="userName">
+	<br>
+	<input type="password" id="passWord">
+	<br>
+	<input type="button" value="登录" id="login">
+	<script>
+	var login = document.getElementById('login')
+	login.onclick = function(){
+		var userName = document.getElementById('userName')
+		var passWord = document.getElementById('passWord')
+		if(userName.value.length < 3 || userName.value.length > 6){
+			userName.className = 'border';
+			return;
+		}else{
+			userName.className = '';
+		}
+
+		if(passWord.value.length < 6 || passWord.value.length > 8){
+			passWord.className = 'border';
+			return;
+		}else{
+			passWord.className = '';
+		}
+		alert('登录')
+	}
+	</script>
+</body>
+</html>

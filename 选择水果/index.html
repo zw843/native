@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选择水果</title>
+	<style>
+	 select{
+	 	width: 300px;
+	 	height: 300px;
+	 	background-color: tan;
+	 	font-size: 20px;
+	 }
+	</style>
+</head>
+<body>
+	<select name="" id="all" multiple="multiple">
+	<option value="">苹果</option>
+	<option value="">香蕉</option>
+	<option value="">菠萝</option>
+	<option value="">芒果</option>
+	<option value="">橘子</option>
+	</select>
+	<input type="button" value=">>" id="btn1">
+	<input type="button" value="<<" id="btn2">
+	<input type="button" value=">" id="btn3">
+	<input type="button" value="<" id="btn4">
+	<select name="" id="select" multiple="multiple">
+	
+	</select>
+	<script>
+	function my$(id){
+		return document.getElementById(id)
+	}
+	var all = document.getElementById('all')
+	var select = document.getElementById('select')
+	//1.全部选择
+	my$('btn1').onclick = function(){
+		var len = all.children.length;
+		for(var i = 0; i < len; i++){
+			//all.children[0] 0可以理解为剩余个数
+			var option = all.children[0]
+			select.appendChild(option)
+		}
+	}
+	//2.移动选中水果
+	my$('btn3').onclick = function(){
+		//找到所有option
+		var array = []
+		for(var i = 0; i < all.children.length; i++){
+			var option = all.children[i]
+			if(option.selected){
+				array.push(option)
+			//去掉当前选中效果
+			option.selected = false;
+			}
+		}
+		//移动数组中option到第二个select
+		for(var i = 0; i < array.length; i++){
+			var option = array[i]
+			select.appendChild(option)
+		}
+	}
+	</script>
+</body>
+</html>

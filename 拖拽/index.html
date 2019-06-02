@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.box{
+		width: 400px;
+            height: 300px;
+            border: 5px solid #eee;
+            box-shadow: 2px 2px 2px 2px #666;
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            background-color: white;
+	}
+	.drop{
+		  width: 100%;
+            height: 25px;
+            background-color: #7c9299;
+            border-bottom: 1px solid #369;
+            line-height: 25px;
+            color: white;
+            cursor: move;
+	}
+	#close{
+		  float: right;
+          cursor: pointer;
+	}
+	</style>
+</head>
+<body>
+	<div class="nav">
+	<a href="javascript:void(0)" id="register">注册</a>
+	</div>
+	<div class="box" id="box">
+	<div class="drop" id="drop">注册信息(可以拖拽)
+	<span id="close">关闭</span>
+	</div>
+	<div class="content"></div>
+	</div>
+	<script>
+	var box = document.getElementById('box')
+	var drop = document.getElementById('drop')
+	drop.onmousedown = function(e){
+		//兼容性处理
+		e = e || window.event;
+		//方法一
+		// var x = e.pageX - box.offsetLeft;
+		// var y = e.pageY - box.offsetTop;
+		//方法二
+		var x = getPage(e).pageX - box.offsetLeft;
+    	var y = getPage(e).pageY - box.offsetTop;
+
+		//鼠标在盒子中移动
+		document.onmousemove = function(e){
+			e = e || window.event;
+			//方法一
+			// var boxX = e.pageX - x;
+			// var boxY = e.pageY - y;
+			//方法二
+			var boxX = getPage(e).pageX - x;
+      		var boxY = getPage(e).pageY - y;
+
+			box.style.left = boxX + 'px';
+			box.style.top = boxY + 'px';
+		}
+	}
+
+	//鼠标离开 移出事件
+	document.onmouseup = function(){
+		document.onmousemove = null;
+	}
+	//点击关闭 隐藏盒子
+	var close = document.getElementById('close')
+	close.onclick = function(){
+		box.style.display = 'none'
+	}
+
+	// 获取鼠标在页面的位置，处理浏览器兼容性 方法二需要处理兼容性
+function getPage(e) {
+  var pageX = e.pageX || e.clientX + getScroll().scrollLeft;
+  var pageY = e.pageY || e.clientY + getScroll().scrollTop;
+  return {
+    pageX: pageX,
+    pageY: pageY
+  }
+}
+	</script>
+</body>
+</html>

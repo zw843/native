@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	#tip{
+		width: 100px;
+		height: 20px;
+		line-height: 20px;
+		background-color: tan;
+		opacity: 0.8;
+		margin: 0 auto;
+		padding-top: 10px;
+		text-align: center;
+		color: orange;
+		display: none;
+	}
+	</style>
+	<script>
+	onload = function(){
+	// 当页面的所有元素创建完成, 外部文件下载完毕才会执行
+	var btn = document.getElementById('btn')
+	btn.onclick = function(){
+		var tip = document.getElementById('tip')
+		tip.style.display = 'block'
+	// setTimeout()   定时炸弹   隔一段时间执行，并且只会执行一次
+    // setInterval()  闹钟       隔一段时间执行，并且会重复执行
+    setTimeout(function(){
+    	tip.style.display = 'none'
+    },3000)
+	}
+	}
+	</script>
+</head>
+<body>
+	<input type="button" id="btn" value="删除">
+	<div id="tip">删除成功</div>
+</body>
+</html>

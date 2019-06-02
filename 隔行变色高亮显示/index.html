@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	ul{
+		list-style: none;
+	}
+	</style>
+</head>
+<body>
+	<ul id="mv">
+		<li>貂蝉</li>
+		<li>西施</li>
+		<li>王昭君</li>
+		<li>杨玉环</li>
+		<li>女神</li>
+	</ul>
+	<br><br>
+	<ul id="rest">
+		<li>体育</li>
+		<li>科学</li>
+		<li>音乐</li>
+		<li>艺术</li>
+	</ul>
+	<script>
+	var mv = document.getElementById('mv')
+	var lists = mv.getElementsByTagName('li')
+	for(var i = 0; i < lists.length; i++){
+		var li = lists[i]
+		if( i % 2 === 0 ){
+			li.style.backgroundColor = 'tan'
+		}else{
+			li.style.backgroundColor = 'orange'
+		}
+	}
+
+	for(var i = 0; i < lists.length; i++){
+		var li = lists[i]
+		var bgc;
+		li.onmouseover = function(){
+			//经过记录当前颜色
+			bgc = this.style.backgroundColor;
+			this.style.backgroundColor = 'green'
+		}
+		li.onmouseout = function(){
+			//离开还原
+			this.style.backgroundColor = bgc;
+		}
+	}
+	</script>
+	<script>
+	var rest = document.getElementById('rest')
+	//判断是否有节点
+	if(rest.hasChildNodes){
+		for(var i = 0; i < rest.children.length; i++){
+			var li = rest.children[i]
+			if(i % 2 === 0){
+				li.style.backgroundColor = 'skyblue';
+			}else{
+				li.style.backgroundColor = 'yellowgreen'
+			}
+		}
+	}
+	</script>
+</body>
+</html>

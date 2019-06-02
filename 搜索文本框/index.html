@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	.tan{
+		color: tan;
+	}
+	.green{
+		color: orange;
+	}
+	</style>
+</head>
+<body>
+	<input type="text" class="tan" value="请输入关键字" id="textSearch">
+	<input type="button" value="搜索" id="btnSearch">
+	<script>
+	var textSearch = document.getElementById('textSearch')
+	textSearch.onfocus = function(){
+		if(this.value === '请输入关键字'){
+			this.value = '';
+			this.className = 'green'
+		}
+	}
+	textSearch.onblur = function(){
+		if(this.value.length === 0 || this.value === '请输入关键字'){
+			this.value = '请输入关键字';
+			this.className = 'tan'
+		}
+	}
+	</script>
+</body>
+</html>

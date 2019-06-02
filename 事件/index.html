@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	#box{
+		margin: 0 auto;
+		width: 300px;
+		height: 300px;
+		background-color: orange;
+		border-radius: 50%;
+	}
+	#img{
+		position: absolute;
+	}
+	#box_{
+		width: 500px;
+		height: 500px;
+		border: 2px solid orange;
+		margin: 100px 20px 20px 200px;
+	}
+	</style>
+</head>
+<body>
+	<ul id="lists">
+		<li>语文</li>
+		<li>数学</li>
+		<li>英语</li>
+		<li>物理</li>
+		<li>生物</li>
+	</ul>
+	<div id="box"></div>
+	<img src="img/tianshi.gif" id="img" alt="">
+	<div id="box_"></div>
+	<script>
+	var lists = document.getElementById('lists')
+	lists.onclick = function(e){
+	// e 事件参数（事件对象:当事件发生的时候,可以获取一些和事件相关的数据
+	// e.target 是真正触发事件的对象
+	console.log(e.target)
+	e.target.style.backgroundColor = 'tan'
+	}
+	</script>
+	<script>
+	var box = document.getElementById('box')
+	box.onclick = fn;
+	box.onmouseover = fn;
+	box.onmouseout = fn;
+	function fn(e){
+		e = e || window.event;
+		switch(e.type){
+			case 'click':
+			console.log('点击')
+			break;
+			case 'mouseover':
+			console.log('经过')
+			break;
+			case 'mouseout':
+			console.log('离开')
+			break;
+		}
+	}
+	</script>
+	<script>
+	// var img = document.getElementById('img')
+	// document.onmousemove = function(e){
+	// 	e = e || window.event;
+
+	// 	img.style.left = e.pageX - 20 + 'px';
+	// 	img.style.top = e.pageY - 20 + 'px';
+	// }
+	</script>
+	<script>
+	var box = document.getElementById('box_')
+	box.onclick = function(e){
+	     // 获取盒子在页面上的位置
+		// console.log(this.offsetLeft)
+		// console.log(this.offsetTop)
+
+		e = e || window.event;
+		// 获取鼠标在盒子中的位置 = 鼠标的坐标 - 盒子的坐标
+		var x = getPage(e).pageX - this.offsetLeft;
+		var y = getPage(e).pageY - this.offsetTop;
+		console.log(x)
+		console.log(y)
+	}
+
+	// 获取鼠标在页面的位置，处理浏览器兼容性
+  function getPage(e) {
+  var pageX = e.pageX || e.clientX + getScroll().scrollLeft;
+  var pageY = e.pageY || e.clientY + getScroll().scrollTop;
+  return {
+    pageX: pageX,
+    pageY: pageY
+  }
+}
+	</script>
+</body>
+</html>

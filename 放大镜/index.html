@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.box{
+		width: 350px;
+		height: 350px;
+		margin: 200px;
+		border: 1px solid #5c5c5c;
+		position: relative;
+	}
+	.big{
+		width: 400px;
+		height: 400px;
+		position: absolute;
+		top: 0;
+		left: 400px;
+		border: 1px solid #3c3c3c;
+		overflow: hidden;
+		display: none;
+	}
+	.big img{
+		position: absolute;
+	}
+	.cover{
+		width: 175px;
+		height: 175px;
+		background: rgba(222,222,222,0.8);
+		position: absolute;
+		top: 0;
+		left: 0;
+		cursor: move;
+		display: none;
+	}
+	.small{
+		position: relative;
+	}
+	</style>
+</head>
+<body>
+	<div id="box" class="box">
+		<div class="small">
+	<img src="img/small.webp" width="350" alt="">
+	<div class="cover"></div>
+		</div>
+		<div class="big">
+		<img src="img/big.jpg" width="800" alt="">
+		</div>
+	</div>
+	<script>
+	function my$(id){
+		return document.getElementById(id)
+	}
+	var box = my$('box')
+	var smallBox = box.children[0]
+	var bigBox = box.children[1]
+
+	var smallImage = smallBox.children[0]
+	var cover = smallBox.children[1]
+	var bigImage = bigBox.children[0]
+	 // mouseover   mouseout        会触发事件冒泡
+	   // mouseenter   mouseleave     不会触发事件冒泡
+	//1.鼠标经过时候显示cover和bigBox 鼠标离开box的时候隐藏mask和bigBox
+	// box.onmouseover = function(){
+		box.onmouseenter = function(){
+		cover.style.display = 'block'
+		bigBox.style.display = 'block'
+	}
+	// box.onmouseout = function(){
+	box.onmouseleave = function(){
+		cover.style.display = 'none'
+		bigBox.style.display = 'none'
+	}
+
+	//2.鼠标和cover在盒子中一起移动
+	box.onmousemove = function(e){
+		e = e || window.event;
+		//获取鼠标在盒子中的位置 cover坐标
+		var coverX = e.pageX - box.offsetLeft;
+		var coverY = e.pageY - box.offsetTop;
+
+		//鼠标出现在cover中心
+		coverX = coverX - cover.offsetWidth / 2;
+		coverY = coverY - cover.offsetHeight / 2;
+
+		//cover限制在box中
+		coverX = coverX < 0 ? 0 : coverX;
+		coverY = coverY < 0 ? 0 : coverY;
+
+		coverX = coverX > box.offsetWidth - cover.offsetWidth ? box.offsetWidth - cover.offsetWidth : coverX;
+		coverY =coverY > box.offsetHeight -cover.offsetHeight ? box.offsetHeight -cover.offsetHeight :coverY;
+
+		cover.style.left = coverX + 'px'
+		cover.style.top = coverY + 'px'
+		//3.cover移动,大图移动
+		//大图移动距离
+		//cover移动距离 / cover最大移动距离 = 大图移动距离 / 大图最大移动距离
+		//cover最大移动距离
+		var coverMax = box.offsetWidth - cover.offsetWidth;
+		//大图最大移动距离
+		var bigImageMax = bigImage.offsetWidth - bigBox.offsetWidth;
+
+		var bigImageX = coverX * bigImageMax / coverMax;
+		var bigImageY = coverY * bigImageMax / coverMax;
+
+		bigImage.style.left = -bigImageX + 'px'
+		bigImage.style.top = -bigImageY + 'px'
+	}
+	</script>
+</body>
+</html>
