@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #picture {
+            height: 800px;
+            width: 800px;
+            position: relative;
+            display: block;
+            overflow: hidden;
+            margin: 50px auto;
+        }
+
+        #cover {
+            position: absolute;
+            height: 800px;
+            width: 850px;
+            top: 0;
+            left: 0;
+            display: block;
+            background: transparent;
+            font-size: 0;
+        }
+
+        div {
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+            border: 1px solid #eee;
+            background: #eee;
+            margin: 0;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var cover = document.getElementById('cover'),
+                str = '',
+                //      <div name="div1"></div>
+                // document.getElementsByName('div1');
+                // document.getElementsByTagName('div');
+                // getElementsByName  getElementsByTagName 区别 根据name属性，根据标签名字 
+
+                //获取所有div
+                divs = document.getElementsByTagName('div');
+            for (var i = 0; i < 300; i++) {
+                // 遍历n个方块 使用div包裹起来
+                str += '<div></div>';
+            }
+            cover.innerHTML = str;
+            for (var i = 0; i < 3000; i++) {
+                 // 遍历n个方块 让鼠标经过时候 显示transparent效果 transparent 表示透明无颜色
+                divs[i].onmouseover = function () {
+                    this.style.background = 'transparent';
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <section id="picture">
+        <img src="./img/big.jpg" alt="">
+        <section id="cover">
+
+        </section>
+    </section>
+</body>
+
+</html>

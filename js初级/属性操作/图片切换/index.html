@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #title {
+            width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+
+        #content {
+            width:400px;
+            height:400px;
+            border: 10px solid tan;
+            background-color: orange;
+            margin: 10px auto 0;
+            position: relative;
+        }
+
+        #left,
+        #right {
+            position: absolute;
+            background-color: skyblue;
+            opacity: 0.4;
+            font-size: 20px;
+            color: burlywood;
+            width: 50px;
+            height: 50px;
+            border: 2px solid olive;
+            line-height: 50px;
+            text-align: center;
+            top: 150px;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        #left:hover,
+        #right:hover {
+            /* filter:alpha(opacity:80); */
+            opacity: 0.8;
+        }
+
+        #loading1,
+        #loading2 {
+            position: absolute;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: black;
+            /* filter:alpha(opacity:60); */
+            opacity: 0.6;
+            font-size: 20px;
+            color: white
+        }
+
+        #left {
+            left: 0;
+        }
+
+        #right {
+            right: 0;
+        }
+
+        #picture {
+            height:400px;
+            width:400px;
+        }
+
+        #loading1 {
+            top: 0;
+        }
+
+        #loading2 {
+            bottom: 0
+        }
+    </style>
+    
+    <script>
+        window.onload = function () {
+            var loop = document.getElementById("loop"),
+                order = document.getElementById("order"),
+                left = document.getElementById("left"),
+                right = document.getElementById("right"),
+                loading1 = document.getElementById("loading1"),
+                loading2 = document.getElementById("loading2"),
+                picture = document.getElementById("picture"),
+                arrImg = ["img/wf1.jpg", "img/wf2.jpg", "img/wf3.jpg", "img/wf4.jpg", "img/wf5.jpg"],
+                arrTitle = ["图片一", "图片二", "图片三", "图片四", "图片五"];
+                flag = true;
+            i = 0;
+            loop.onclick = function () {
+                flag = true;
+            }
+            order.onclick = function () {
+                flag = false;
+            }
+
+            function changeTab() {
+                loop.innerHTML = i + 1 + '/' + arrImg.length;
+                loading2.innerHTML = arrTitle[i];
+                picture.src = arrImg[i]
+            }
+            changeTab();
+            //向后翻页
+            right.onclick = function () {
+                i++;
+                if (i > 4 && flag) {
+                    i = 0;
+                } else if (i > 4 && !flag) {
+                    i = 4;
+                    alert("从左往右最后一页")
+                }
+                changeTab();
+            }
+            //向前翻转
+            left.onclick = function () {
+                i--;
+                if (i < 0 && flag) {
+                    i = arrImg.length - 1;
+                  
+                } else if (i < 0 && !flag) {
+                    i = 0;
+                    alert("从右往左最后一页")
+                }
+                changeTab();
+            }
+
+        }
+      
+    </script>
+</head>
+
+<body>
+    <div id="title">
+        <input type="button" id="loop" value="循环">
+        <input type="button" id="order" value="顺序">
+    </div>
+    <div id="content">
+        <a href="javascript:;" id="left">&lt;</a>
+        <a href="javascript:;" id="right">&gt;</a>
+        <div id="loading1">图片加载中...</div>
+        <div id="loading2">图片加载中...</div>
+        <img src="" alt="" id="picture">
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+
+        .all {
+            width: 500px;
+            height: 200px;
+            padding: 5px;
+            border: 1px solid tan;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .box {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .box li {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            float: left;
+        }
+
+        .box ul {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3000px;
+        }
+
+        .box ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .box ol li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background-color: firebrick;
+            border: 1px solid tan;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .box ol li.now {
+            background-color: tomato;
+        }
+
+        #arr {
+            display: none;
+        }
+
+        #arr span {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            margin-top: -20px;
+            background: rgb(151, 238, 10);
+            cursor: pointer;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: "微软雅黑";
+            font-size: 20px;
+            color: sienna;
+            opacity: .4;
+            border: 1px solid sandybrown;
+            border-radius: 10px;
+        }
+     
+        #arr span:hover {
+            background: tomato;
+        }
+        #arr #right {
+            right: 5px;
+            left: auto;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            //需求：无缝滚动。
+            //思路：赋值第一张图片放到ul的最后，然后当图片切换到第五张的时候
+            //     直接切换第六章，再次从第一张切换到第二张的时候先瞬间切换到
+            //     第一张图片，然后滑动到第二张
+            //步骤：
+            //1.获取事件源及相关元素。（老三步）
+            //2.复制第一张图片所在的li,添加到ul的最后面。
+            //3.给ol中添加li，ul中的个数-1个，并点亮第一个按钮。
+            //4.鼠标放到ol的li上切换图片
+            //5.添加定时器
+            //6.左右切换图片（鼠标放上去隐藏，移开显示）
+
+
+            //1.获取事件源及相关元素。（老三步）
+            var all = document.getElementById("all")
+            var box = all.firstElementChild || all.firstChild;
+            var imgWidth = box.offsetWidth;
+            var ul = box.firstElementChild || box.firstChild;
+            var ol = box.children[1];
+            var div = box.lastElementChild || box.lastChild;
+            var spanArr = div.children;
+            //2.复制第一张图片所在的li,添加到ul的最后面。
+            var ulNewLi = ul.children[0].cloneNode(true);
+            ul.appendChild(ulNewLi);
+            //3.给ol中添加li，ul中的个数-1个，并点亮第一个按钮。
+            for (var i = 0; i < ul.children.length - 1; i++) {
+                var olNewLi = document.createElement("li");
+                olNewLi.innerHTML = i + 1;
+                ol.appendChild(olNewLi)
+            }
+            var olLiArr = ol.children;
+            olLiArr[0].className = "now"
+            //4.鼠标放到ol的li上切换图片
+            for (var i = 0; i < olLiArr.length; i++) {
+                //自定义属性，把索引值绑定到元素的index属性上
+                olLiArr[i].index = i;
+                olLiArr[i].onmouseover = function () {
+                    //排他思想 (全部清除 单独设置)
+                    for (var j = 0; j < olLiArr.length; j++) {
+                        olLiArr[j].className = "";
+                    }
+                    this.className = "now";
+                    //鼠标放到小的方块上的时候索引值和key以及round同步
+                    //    key = this.index;
+                    //  square = this.index;
+                    key = round = this.index;
+                    //移动盒子
+                    animate(ul, -this.index * imgWidth);
+                }
+            }
+            //5.添加定时器
+            var timer = setInterval(autPlay, 1000);
+            //固定向右切换图片
+            //两个定时器(记录图片 记录小圆) 
+            var key = 0;
+            var round = 0;
+
+            function autPlay() {
+                //通过控制key的自增来模拟图片索引值,移动ul
+                key++;
+                if (key > olLiArr.length) {
+                    //只需要key索引和图片索引一致
+                    //图片到最后一张,接下来,跳转到第一张,滑动到第二张
+                    ul.style.left = 0;
+                    key = 1;
+                }
+                animate(ul, -key * imgWidth);
+                //通过控制round的自增来模拟小圆的索引值,并且点亮盒子
+                //排他思想做小圆
+                round++;
+                if (round > olLiArr.length - 1) {
+                    //因为ul中的个数-1个 让ul和ol中的个数相同
+                    //索引值不能大于等于5,等于5,变为0
+                    round = 0;
+                }
+                for (var i = 0; i < olLiArr.length; i++) {
+                    olLiArr[i].className = "";
+                }
+                olLiArr[round].className = "now";
+            }
+            //鼠标放上去清除定时器,移开后开启定时器
+            all.onmouseover = function () {
+                div.style.display = "block"
+                clearInterval(timer)
+            }
+            all.onmouseleave = function () {
+                div.style.display = "none"
+                timer = setInterval(autPlay, 1000);
+            }
+            //6.左右切换图片（鼠标放上去隐藏，移开显示）
+            spanArr[0].onclick = function () {
+                //通过控制key的自增来模拟图片索引值,移动ul
+                key--;
+                if (key < 0) {
+                    //先移动到最后一张,然后key的值取之前一张索引值,然后向前移动
+                    ul.style.left = -imgWidth * (olLiArr.length) + "px"
+                    key = olLiArr.length - 1;
+                }
+                animate(ul, -key * imgWidth);
+                //通过控制round的自增来模拟小圆的索引值,然后点亮盒子
+                //排他思想做小圆
+                round--;
+                if (round < 0) {
+                    //索引值不能大于等于5,等于5,变为0
+                    //因为ul中的个数-1个 让ul和ol中的个数相同
+                    round = olLiArr.length - 1;
+                }
+                for (var i = 0; i < olLiArr.length; i++) {
+                    olLiArr[i].className = ""
+                }
+                olLiArr[round].className = "now";
+            }
+            spanArr[1].onclick = function () {
+                //右侧和定时器一样
+                autPlay();
+            }
+
+            //     //【重要】方法的封装：每间隔30ms，将盒子向右移动10px
+                 function animate(ele, target) {
+                //要用定时器，先清除定时器
+                //一个盒子只能有一个定时器，这样的话，不会和其他盒子出现定时器冲突
+                //我们可以把定时器本身，当成为盒子的一个属性
+                clearInterval(ele.timer);
+                //我们要求盒子既能向前又能向后，那么我们的步长就得有正有负
+                //目标值如果大于当前值取正，目标值如果小于当前值取负
+                var speed = target > ele.offsetLeft ? 10 : -10;  //speed指的是步长
+                ele.timer = setInterval(function () {
+                    //在执行之前就获取当前值和目标值之差
+                    var val = target - ele.offsetLeft;
+                    ele.style.left = ele.offsetLeft + speed + "px";
+                    //移动的过程中，如果目标值和当前值之差如果小于步长，那么就不能在前进了
+                    //因为步长有正有负，所有转换成绝对值来比较
+                    if (Math.abs(val) < Math.abs(speed)) {
+                        ele.style.left = target + "px";
+                        clearInterval(ele.timer);
+                    }
+                }, 30)
+            }
+
+            //【重要】方法的封装：每间隔30ms，将盒子向右移动10px
+            // function animate(ele, target) {
+            //     //要用定时器，先清除定时器
+            //     //一个盒子只能有一个定时器，这样的话，不会和其他盒子出现定时器冲突
+            //     //我们可以把定时器本身，当成为盒子的一个属性
+            //     clearInterval(ele.timer);
+            //     //我们要求盒子既能向前又能向后，那么我们的步长就得有正有负
+            //     //目标值如果大于当前值取正，目标值如果小于当前值取负
+            //     var speed = target > ele.offsetLeft ? 10 : -10; //speed指的是步长
+            //     ele.timer = setInterval(function () {
+            //         //在执行之前就获取当前值和目标值之差
+            //         var val = target - ele.offsetLeft;
+
+            //     //移动的过程中，如果目标值和当前值之差如果小于步长，那么就不能在前进了
+            //     //因为步长有正有负，所有转换成绝对值来比较
+            //         if (Math.abs(val) < Math.abs(speed)) { //如果val小于步长，则直接到达目的地；否则，每次移动一个步长
+            //             ele.style.left = target + "px";
+            //             clearInterval(ele.timer);
+            //         } else {
+            //             ele.style.left = ele.offsetLeft + speed + "px";
+            //         }
+            //     }, 30)
+            // }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="all" class="all">
+        <div id="box" class="box">
+            <ul>
+                <li><img src="./img/wf1.jpg" width="500" height="200"></li>
+                <li><img src="./img/wf2.jpg" width="500" height="200"></li>
+                <li><img src="./img/wf3.jpg" width="500" height="200"></li>
+                <li><img src="./img/wf4.jpg" width="500" height="200"></li>
+                <li><img src="./img/wf5.jpg" width="500" height="200"></li>
+            </ul>
+            <ol>
+
+            </ol>
+            <div id="arr">
+                <span id="left"><</span>
+                <span id="right">></span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

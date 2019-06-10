@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            position: relative;
+        }
+
+        p {
+            padding: 50px;
+            margin-right: 30px
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            border: 10px solid tan;
+            margin-left: 50px
+        }
+
+        #task {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, .6);
+            display: none;
+        }
+
+        #setting {
+            width: 350px;
+            height: 300px;
+            border: 10px solid orange;
+            background: honeydew;
+            position: absolute;
+            bottom: 30%;
+            right: 30%
+        }
+
+        .options {
+            padding: 35px
+        }
+
+        .options span {
+            display: inline-block;
+            border: 1px solid orange;
+            padding: 5px;
+            color: olive;
+            cursor: pointer;
+            margin-left: 10px;
+            text-align: center
+        }
+
+        #red {
+            background-color: rosybrown;
+        }
+
+        #yellow {
+            background-color: yellowgreen;
+        }
+
+        #blue {
+            background-color: skyblue;
+        }
+
+        .last {
+            text-align: center
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var box = document.getElementById("box"),
+            red = document.getElementById("red"),
+            yellow = document.getElementById("yellow"),
+            blue = document.getElementById("blue"),
+            w200 = document.getElementById("w200"),
+            w400 = document.getElementById("w400"),
+            w600 = document.getElementById("w600"),
+            h200 = document.getElementById("h200"),
+            h400 = document.getElementById("h400"),
+            h600 = document.getElementById("h600"),
+            newReset = document.getElementById("reset"),
+            ok = document.getElementById("ok"),
+            task = document.getElementById("task"),
+            set = document.getElementById("set"),
+            setting = document.getElementById("setting")
+     
+        //背景色函数
+        function setBgColor(bgcolor) {
+            box.style.background = bgcolor;
+        }
+        //设置宽度
+        function setWidth(x) {
+            box.style.width = x + "px"
+        }
+        //设置高度
+        function setHeight(y) {
+            box.style.height = y + "px"
+        }
+        //重置
+        function reset() {
+            setBgColor('transparent')
+            setWidth(100)
+            setHeight(100)
+        }
+        set.onclick = function () {
+            task.style.display = "block"
+        }
+        ok.onclick = function () {
+            task.style.display = "none"
+        }
+        red.onclick = function () {
+            setBgColor('red')
+        }
+        yellow.onclick = function () {
+            setBgColor('yellow')
+        }
+        blue.onclick = function () {
+            setBgColor('blue')
+        }
+        w200.onclick = function(){
+            setWidth(200)
+        }
+        w400.onclick = function(){
+            setWidth(400)
+        }
+        w600.onclick = function(){
+            setWidth(600)
+        }
+        h200.onclick = function(){
+            setHeight(200)
+        }
+        h400.onclick = function(){
+            setHeight(400)
+        }
+        h600.onclick = function(){
+            setHeight(600)
+        }
+        newReset.onclick = reset;
+    }
+    </script>
+</head>
+
+<body>
+    <div id="task">
+        <div id="setting">
+            <div class="options">
+                选择背景:
+                <span id="red">红色</span>
+                <span id="yellow">黄色</span>
+                <span id="blue">蓝色</span>
+            </div>
+            <div class="options">
+                选择宽度:
+                <span id="w200">200</span>
+                <span id="w400">400</span>
+                <span id="w600">600</span>
+            </div>
+            <div class="options">
+                选择高度:
+                <span id="h200">200</span>
+                <span id="h400">400</span>
+                <span id="h600">600</span>
+            </div>
+            <div class="options last">
+                <span id="reset">重置</span>
+                <span id="ok">确定</span>
+            </div>
+        </div>
+    </div>
+    <p>点击设置样式: <input type="button" id="set" value="点击设置样式"></p>
+    <div id="box"></div>
+
+</body>
+
+</html>

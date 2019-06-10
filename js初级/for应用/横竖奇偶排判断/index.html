@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            background: saddlebrown;
+        }
+        #box{
+            margin: 0;
+            padding: 0;
+            /* 规定段落中的文本不进行换行： */
+            white-space: nowrap;
+        }
+        #box img{ 
+            list-style: none;
+            width: 100px;
+            height: 100px;
+            background-color: tan;
+            margin: 20px;
+            border: 15px solid whitesmoke;
+            border-radius: 50%;
+            transition: all 0.8s;
+        }
+        #box img.selected{
+            border: 15px solid antiquewhite;
+            border-radius: 0%;
+        }
+        #box img.zoom{
+            transform: scale(1.2)
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var btn1 = document.getElementById("btn1"),
+                btn2 = document.getElementById("btn2"),
+                btn3 = document.getElementById("btn3"),
+                btn4 = document.getElementById("btn4"),
+                btn5 = document.getElementById("btn5"),
+                btn6 = document.getElementById("btn6"),
+                btn7 = document.getElementById("btn7"),
+                box = document.getElementById("box"),
+                img = ['img/wf1.jpg','img/wf2.jpg','img/wf3.jpg','img/wf4.jpg','img/wf5.jpg'],
+                left,
+                top,
+                i = 0,
+                num = 7,
+                pic = box.getElementsByTagName("img");
+                btn1.onclick = function(){
+                    createImg = (i+1)%num?'':'<br/>';
+                    box.innerHTML += '<img src="' + img[i%img.length] + ' " />' + createImg;
+                    i++;
+                }
+                function clearAll(){
+                    for(var i = 0; i < pic.length;i++){
+                        pic[i].className = '';
+                    }
+                }
+                btn2.onclick = function(){
+                    clearAll();
+                    for(var i = 0; i < pic.length;i++){
+                        if(!(i%2)){
+                            pic[i].className = 'selected';
+                        }
+                    }
+                }
+                btn3.onclick = function(){
+                    clearAll();
+                    for(var i = 0; i < pic.length; i++){
+                        if((i%2)){
+                            pic[i].className = 'selected';
+                        }
+                    }
+                }
+                btn4.onclick = function(){
+                    clearAll();
+                    for(var i = 0; i < pic.length; i++){
+                        if(Math.floor(i/7)%2 == 0){
+                            pic[i].className = 'selected';
+                        }
+                    }
+                }
+                btn5.onclick = function(){
+                    clearAll();
+                    for(var i = 0; i < pic.length;i++){
+                        if(Math.floor(i/7)%2){
+                            pic[i].className = 'selected';
+                        }
+                    }
+                }
+                btn6.onclick = function(){
+                    clearAll();
+                    for(var i = 0; i < pic.length; i++){
+                        if( (!(i%2) && (Math.floor(i/7))%2 == 0) || (i%2 && (Math.floor(i/7))%2)){
+                            pic[i].className = 'selected';
+                        }
+                    }
+                }
+                btn7.onclick = function(){
+                    clearAll();
+                    for(var i = 0; i<pic.length;i++){
+                        if( ((i%2) && (Math.floor(i/7))%2 == 0 ) || (!(i%2) && (Math.floor(i/7))%2 ) ){
+                            pic[i].className = 'selected';
+                        }
+                    }
+                }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" id="btn1" value="生成一张图片">
+    <input type="button" id="btn2" value="奇数">
+    <input type="button" id="btn3" value="偶数">
+    <input type="button" id="btn4" value="奇数横排">
+    <input type="button" id="btn5" value="偶数横排">
+    <input type="button" id="btn6" value="奇数竖排">
+    <input type="button" id="btn7" value="偶数竖排">
+    <div id="box"></div>
+</body>
+</html>

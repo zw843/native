@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.box {
+			margin-top: 150px;
+			width: 100%;
+			height: 500px;
+			position: relative;
+		}
+
+		.list {
+			width:100%;
+			height: 300px;
+			overflow: hidden;
+			position: absolute;
+			left: 50%;
+			margin-left: -575px;
+		}
+
+		.btn {
+			position: absolute;
+			top: 50%;
+			margin-top: -150px;
+			width: 80px;
+			height: 100px;
+			line-height: 100px;
+			font-size: 30px;
+			color: tomato;
+			text-decoration: none;
+			text-align: center;
+			background: rgba(6, 245, 245, 0.6);
+			cursor: pointer;
+		}
+
+		.right {
+			right: 0;
+		}
+
+		li {
+			position: absolute;
+			top: 0;
+			left: 0;
+			list-style: none;
+			opacity: 0;
+			transition: all 0.5s ease-out;
+		}
+
+		img {
+			width: 750px;
+			height: 300px;
+			border: none;
+			float: left;
+			border-radius: 15px;
+		}
+
+		.img1 {
+			transform: translate3d(-200px, 0, 0) scale(0.8);
+		}
+
+		.img2 {
+			transform: translate3d(0px, 0, 0) scale(0.8);
+			transform-origin: 0 50%;
+			opacity: 0.6;
+			z-index: 2;
+		}
+
+		.img3 {
+			transform: translate3d(200px, 0, 0) scale(1);
+			z-index: 3;
+			opacity: 1;
+		}
+
+		.img4 {
+			transform: translate3d(400px, 0, 0) scale(0.8);
+			transform-origin: 100% 50%;
+			opacity: 0.8;
+			z-index: 2;
+		}
+
+		.img5 {
+			transform: translate3d(600px, 0, 0) scale(0.8);
+		}
+
+		.buttons {
+			position: absolute;
+			width: 1366px;
+			height: 30px;
+			bottom: 20%;
+			left: 50%;
+			margin-left: -683px;
+			text-align: center;
+			padding-top: 10px;
+		}
+
+		.buttons a {
+			display: inline-block;
+			width: 40px;
+			height: 5px;
+			cursor: pointer;
+			padding-top: 2px
+		}
+
+		span {
+			display: block;
+			width: 40px;
+			height: 2px;
+			background: tan;
+		}
+
+		.tan {
+			background: firebrick;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="box">
+		<div class="list">
+			<ul>
+				<li class="img5"><a href="javascript:void(0);"><img src="img/wf1.jpg" alt=""></a></li>
+				<li class="img4"><a href="javascript:void(0);"><img src="img/wf2.jpg" alt=""></a></li>
+				<li class="img3"><a href="javascript:void(0);"><img src="img/wf3.jpg" alt=""></a></li>
+				<li class="img2"><a href="javascript:void(0);"><img src="img/wf4.jpg" alt=""></a></li>
+				<li class="img1"><a href="javascript:void(0);"><img src="img/wf5.jpg" alt=""></a></li>
+			</ul>
+		</div>
+		<a href="javascript:void(0);" class="left btn"> <</a>
+		 <a href="javascript:void(0);" class="right btn">></a>
+	 
+			<div class="buttons">
+				<a href="javascript:void(0);"><span class="tan"></span></a>
+				<a href="javascript:void(0);"><span></span></a>
+				<a href="javascript:void(0);"><span></span></a>
+				<a href="javascript:void(0);"><span></span></a>
+				<a href="javascript:void(0);"><span></span></a>
+			</div>
+	</div>
+	<script src="./jquery.js"></script>
+	<script>
+		var $a = $(".buttons a");
+		var $s = $(".buttons span");
+		var imgsArr = ["img5", "img4", "img3", "img2", "img1"];
+		var index = 0;
+		$(".right").click(
+			function () {
+				rightimg();
+			}
+		)
+		$(".left").click(
+			function () {
+				leftimg();
+			}
+		)
+		//left
+		function leftimg() {
+			imgsArr.unshift(imgsArr[4]);
+			imgsArr.pop();
+			//i是元素的索引，从0开始
+			//e为当前处理的元素
+			//each循环，当前处理的元素移除所有的class，然后添加数组索引i的class
+			$("li").each(function (i, e) {
+				$(e).removeClass().addClass(imgsArr[i]);
+			})
+			index--;
+			if (index < 0) {
+				index = 4;
+			}
+			show();
+		}
+		//right
+		function rightimg() {
+			imgsArr.push(imgsArr[0]);
+			imgsArr.shift();
+			//i是元素的索引，从0开始
+			//e为当前处理的元素
+			//each循环，当前处理的元素移除所有的class，然后添加数组索引i的class
+			$("li").each(function (i, e) {
+				$(e).removeClass().addClass(imgsArr[i]);
+			})
+			index++;
+			if (index > 4) {
+				index = 0;
+			}
+			show();
+		}
+		//通过底部按钮切换
+		$a.each(function () {
+			$(this).click(function () {
+				var myindex = $(this).index();
+				var b = myindex - index; //myindex可以理解为点击数
+				if (b == 0) {
+					return;
+				} else if (b > 0) {
+					/*splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。该方法会改变原始数组
+					 * splice(0,b)的意思是从索引0开始,取出数量为b的数组
+					 * 因为每次点击之后数组都被改变了,所以当前显示的这个照片的索引才是0
+					 * 所以取出从索引0到b的数组,就是从原本的这个照片到需要点击的照片的数组
+					 * 这时候原本的数组也将这部分数组进行移除了
+					 * 再把移除的数组添加的原本的数组的后面
+					 */
+					var newArr = imgsArr.splice(0, b);
+					//$.merge() 函数用于合并两个数组内容到第一个数组
+					imgsArr = $.merge(imgsArr, newArr);
+					$("li").each(function (i, e) {
+						$(e).removeClass().addClass(imgsArr[i]);
+					})
+					index = myindex;
+					show();
+				} else if (b < 0) {
+					/*
+					 * 因为b<0,所以取数组的时候是倒序来取的,也就是说我们可以先把数组的顺序颠倒一下
+					 * 而b现在是负值,所以取出索引0到-b即为需要取出的数组
+					 * 也就是从原本的照片到需要点击的照片的数组
+					 * 然后将原本的数组跟取出的数组进行拼接
+					 * 再次倒序,使原本的倒序变为正序
+					 */
+					imgsArr.reverse();
+					var oldArr = imgsArr.splice(0, -b);
+					imgsArr = $.merge(imgsArr, oldArr);
+					imgsArr.reverse();
+					$("li").each(function (i, e) {
+						$(e).removeClass().addClass(imgsArr[i]);
+					})
+					index = myindex;
+					show();
+				}
+			})
+		})
+		//改变底部按钮背景色 eq() 方法将匹配元素集缩减值指定 index 上的一个。parent() 方法返回被选元素的直接父元素。
+		function show() {
+			$($s).eq(index).addClass("tan").parent().siblings().children().removeClass("tan");
+		}
+		// //点击class为img2的元素触发上张照片的函数
+		// $(document).on("click", ".img2", function () {
+		// 	leftimg();
+		// 	return false; //返回false 让a标签不跳转
+		// })
+		// //点击class为p4的元素触发下一张照片的函数
+		// $(document).on("click", ".img4", function () {
+		// 	rightimg();
+		// 	return false;
+		// });
+
+		//鼠标移入box清除定时器
+		// $(".box").mouseenter(function(){
+		// 	clearInterval(timer);
+		// })
+		$(".box").mouseover(function(){
+			clearInterval(timer);
+		})
+		//鼠标移出定时器开始
+		$(".box").mouseleave(function(){
+			timer = setInterval(rightimg,2000);
+		})
+		//进入页面自动开始定时器
+		timer = setInterval(rightimg,2000);
+	</script>
+</body>
+
+</html>

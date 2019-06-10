@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: tan
+        }
+
+        p {
+            text-align: center
+        }
+
+        input {
+            font-size: 20px;
+            color: springgreen;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, .4)
+        }
+
+        p .active {
+            border: 3px solid olive;
+            color: mediumslateblue
+        }
+
+        #box {
+            width: 1100px;
+            margin: 0 auto;
+            border: 1px solid goldenrod;
+            overflow: hidden;
+            border-bottom: none;
+            border-right: 1px solid antiquewhite;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, .4)
+        }
+
+        #box ul {
+            padding: 0;
+            margin: 0;
+            float: left;
+            width: 300px;
+        }
+
+        #box li {
+            list-style: none;
+            height: 100px;
+            border-bottom: 1px solid firebrick;
+            background: crimson;
+            text-align: center;
+            cursor: pointer;
+            font: 50px/100px '微软雅黑'
+        }
+
+        #box .active {
+            background: lightblue;
+            color: maroon
+        }
+        #box img {
+            float: left;
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        <input type="button" value="下一张">
+        <input type="button" class="active" value="交叉走">
+        <input type="button" value="同步走">
+    </p>
+    <div id="box">
+        <ul>
+            <li class="active">0</li>
+            <li>1</li>
+            <li>2</li>
+        </ul>
+        <img src="./img/wf1.jpg" alt="">
+        <ul>
+            <li>3</li>
+            <li>4</li>
+            <li class="active">5</li>
+        </ul>
+    </div>
+    <script>
+        var btn = document.getElementsByTagName("input");
+        var li = document.getElementsByTagName("li");
+        var img = document.getElementsByTagName("img")[0];
+        var arrImg = ['img/wf1.jpg', 'img/wf2.jpg', 'img/wf3.jpg'];
+        var now = 0;
+        var flag = true;
+        btn[0].onclick = function () {
+            if (now > 2 && flag) {
+                // 3 2
+                // 4 1
+                // 5 0
+                now = 5 - now;
+            }
+            now++;
+            now %= 3;
+            flag ? cross() : same();
+        }
+        btn[1].onclick = function () {
+            this.className = 'active';
+            btn[2].className = '';
+
+            flag = true;
+            cross();
+        };
+        btn[2].onclick = function () {
+            this.className = 'active';
+            btn[1].className = '';
+
+            flag = false;
+            same();
+        }
+        for (var i = 0; i < li.length; i++) {
+            li[i].index = i;
+            li[i].onclick = function () {
+                now = this.index;
+                if (flag) {
+                    cross();
+                } else {
+                    same();
+                }
+            }
+        }
+
+        function same() {
+            clearClass();
+            if (now < 3) {
+                li[now].className = 'active';
+                li[now + 3].className = 'active';
+            } else {
+                li[now].className = 'active';
+                li[now - 3].className = 'active';
+            }
+            img.src = arrImg[now % 3];
+        }
+
+        function cross() {
+            clearClass();
+            li[now].className = 'active';
+            li[5 - now].className = 'active';
+            if (now < 3) {
+                img.src = arrImg[now]
+            } else {
+                img.src = arrImg[5 - now];
+            }
+        }
+
+        function clearClass() {
+            for (var i = 0; i < li.length; i++) {
+                li[i].className = '';
+            }
+        }
+    </script>
+</body>
+
+</html>

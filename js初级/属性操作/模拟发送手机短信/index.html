@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+           width: 300px;
+            height: 700px;
+            background: url("./img/mobile.png") no-repeat center center;
+            margin: auto;
+            position: relative;
+        }
+        #content{
+            height: 375px;
+            width: 235px;
+            position: absolute;
+            top: 140px;
+            left: 32px;
+            overflow:scroll;
+        }
+        #footer{
+            margin: 0;
+            position: absolute;
+            left: 33px;
+            bottom: 141px;
+            background: #ccc;
+            border-top: 1px solid orange;
+            border-bottom: 1px solid olive;
+            width: 235px;
+            text-align: center;
+            display: inline;
+            line-height: 39px;
+        }
+        #headImg{
+            width: 24px;
+            height: 24px;
+            border: 1px solid turquoise;
+            border-radius: 5px;
+            padding: 2px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        #message{
+            height: 24px;
+            width: 140px;
+            font-size: 12px;
+            vertical-align: middle;
+            padding-left: 2px
+        }
+        #send{
+            border: 1px solid palegoldenrod;
+            padding: 5px;
+            vertical-align: middle;
+            border-radius: 5px;
+            font-size: 14px;
+            color: peru;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        #content p{
+            margin: 2px;
+        }
+        #content span{
+            font-size: 14px;
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid palegreen;
+            border-radius: 5px;
+            margin: 3px;
+            max-width: 160px;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+        #content img{
+            height: 24px;
+            width: 24px;
+            border: 1px solid teal;
+            border-radius: 5px;
+            padding: 2px;
+            margin: 3px;
+            vertical-align: top;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var headImg = document.getElementById("headImg"),
+                messages = document.getElementById("message"),
+                send = document.getElementById("send"),
+                content = document.getElementById("content"),
+                flag = 1;
+                headImg.onclick = function(){
+                    if(flag){
+                            headImg.src = './img/headImg2.png';
+                            flag = 0;
+                    }else if(!flag){
+                        headImg.src = './img/headImg1.png';
+                        flag = 1;
+                    }
+                }
+            send.onclick = function(){
+                if(messages.value == ''){
+                    alert('内容不能为空')
+                }else{
+                    if(flag){
+                        content.innerHTML = "<p style='text-align:right'><span style='background:tan'>" + messages.value + '</span>'   + "<img src='img/headImg1.png'>" + "</p>" + content.innerHTML;                       
+                    }else if(!flag){
+                        content.innerHTML = "<p style='text-align:left'>" + "<img src='./img/headImg2.png'>" + "<span style='background:yeloowgreen'>" +   messages.value + "</span></p>" + content.innerHTML;
+                      
+                    }
+                }
+            }    
+        }
+    </script>
+</head>
+<body>
+    <div id="box">
+        <div id="content"></div>
+        <p id="footer">
+            <img src="./img/headImg1.png"  id="headImg">
+            <input type="text" id="message" placeholder="选头像、输文字、点发送">
+            <a  id="send" href="javascript:;">发送</a>
+        </p>
+    </div>
+</body>
+</html>

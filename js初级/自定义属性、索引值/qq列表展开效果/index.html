@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{ margin:0; padding:0; list-style:none; font-family:"微软雅黑";}
+    #lists{ width:300px; margin:50px auto 0; border-left:1px solid chartreuse; border-right:1px solid turquoise;}
+    #lists h2{ width:270px; height:35px; line-height:35px; padding-left:30px; background:url(img/ico1.gif) 10px no-repeat #74a400; color:#fff; font-size:16px; font-weight:100; cursor:pointer;}
+    #lists h2.hover{ background:url(img/ico2.gif) 10px no-repeat #74a400;}
+    #lists li{ margin-bottom:1px;}
+    #lists li ul li{ width:270px; padding-left:30px; height:30px; line-height:30px; border-bottom:1px solid #ccc; cursor:pointer;}
+    #lists li ul .hover{ background:rgb(10, 201, 51);}
+    #lists li ul .active{ background:rgb(190, 126, 7);}
+    #lists li ul{ display:none;}
+    #lists li ul.hover{ display:block;}
+    </style>
+    <script>
+        window.onload = function(){
+            var lists = document.getElementById("lists");
+            var li = lists.getElementsByTagName("li");
+            var h2 = lists.getElementsByTagName("h2");
+            var ul = lists.getElementsByTagName("ul");
+            var li = null;
+            var arrLi = [];
+            //lists ul li
+            for(var i = 0; i < ul.length; i++){
+                li = ul[i].getElementsByTagName("li");
+                for(var j = 0; j < li.length; j++){
+                    //  ul所有li都放进arrLi里面
+                    arrLi.push(li[j])
+                }
+            }
+        //    console.log(i)
+        //    console.log(arrLi.length)
+            // console.log(ul)
+        for( var i = 0; i < h2.length; i++){
+            //h2的索引和i一致
+            h2[i].index = i;
+            h2[i].onclick = function(){
+                if(this.className == ''){
+                    //如果当前类名为空 则类名为hover ul(当前索引中的ul)类名为hover
+                    this.className = 'hover';
+                    ul[this.index].className = 'hover';
+                }else{
+                    //如果当前类名不为空 再次点击清空当前
+                    this.className = '';
+                    ul[this.index].className = '';
+                    
+                    //获取当前ul索引中ul中的li 让其类名为空 标记为true
+                    var li = ul[this.index].getElementsByTagName("li");
+                    for(var i = 0; i < li.length; i++){
+                        li[i].className = '';
+                        li[i].flag = true;
+                    }
+                }
+            }
+        }
+        //遍历所有li,标记每个li为true 鼠标经过时 激活背景色
+        for(var i = 0; i < arrLi.length; i++){
+            arrLi[i].flag = true;
+            arrLi[i].onmouseover = function(){
+                if(this.flag){
+                    this.className = 'active';
+                }
+            }
+            //鼠标离开时 如果标记为true 则清除背景色 如果为false 则添加类名hover
+            arrLi[i].onmouseout = function(){
+                    if(this.flag){
+                        this.className = '';
+                    }else{
+                        this.className = 'hover';
+                    }
+            };
+            //点击所有li 当前点击个数不等于全部li时 清除li的类名  并让所有li标记为true
+            arrLi[i].onclick = function(){
+                for(var i = 0; i < arrLi.length; i++){
+                    if(this != arrLi[i]){
+                        arrLi[i].className = '';
+                        arrLi[i].flag = true;
+                    }
+                }
+                //如果标记为true 当前类名为hover 并让当前标记为false
+                if(this.flag){
+                    this.className = 'hover';
+                    this.flag = false;
+                }else{
+                    //当前标记为false 清空类名 当前标记为true
+                    this.className = '';
+                    this.flag = true;
+                }
+            }
+        }
+        }
+    
+    </script>
+</head>
+<body>
+    <ul id="lists">
+        <li>
+            <h2>my friend</h2>
+            <ul>
+                <li>张大三</li>
+                <li>李小四</li>
+                <li>王老五</li>
+            </ul>
+        </li>
+        <li>
+            <h2>my leader</h2>
+            <ul>
+                    <li>黄腾达</li>
+                    <li>刘和谐</li>
+                    <li>邢如意</li>
+                    <li>沈从文</li>
+                    <li>张曼玉</li>
+            </ul>
+        </li>
+        <li>
+            <h2>my student</h2>
+            <ul>
+                    <li>郭文明</li>            
+                    <li>尹调整</li>
+                    <li>郑安全</li>
+                    <li>郭文明</li>            
+                    <li>尹调整</li>
+                    <li>郑安全</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
