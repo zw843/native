@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .clear{
+            /* 缩放 */
+            zoom: 1;
+        }
+        .clear:after{
+            content:'';
+            display: block;
+            clear: both;
+        }
+      
+        #first{
+            width: 500px;
+			height: 450px;
+			background: tan;
+			float: left;
+			text-align: center;
+        }
+        #first img{
+            width: 480px;
+			height: 380px;
+			margin: 10px;
+			cursor: pointer;
+        }
+        #second {
+			width: 300px;
+			height: 450px;
+			background: greenyellow;
+			float: left;
+			text-align: center;
+		}
+        #second img {
+			width: 280px;
+			height: 380px;
+			margin: 10px;
+			cursor: pointer;
+		}
+        #first h2, #second h2 {
+			font-size: 18px;
+			margin: 0;
+			padding: 0;
+		}
+        #first p, #second p {
+			text-align: left;
+			margin: 0;
+			padding: 0;
+			padding-left: 10px;
+		}
+    </style>
+    <script>
+        window.onload = function(){
+            var first = document.getElementById("first"),
+                second = document.getElementById("second"),
+                firstImg = first.getElementsByTagName("img")[0],
+                secondImg =second.getElementsByTagName("img")[0],
+                arrFisrt = ['img/wf1.jpg','img/wf2.jpg','img/wf3.jpg','img/wf4.jpg','img/wf5.jpg'],
+                arrSecond = ['img/wf3.jpg','img/wf4.jpg','img/wf5.jpg'],
+                left = document.getElementById("left"),
+                right = document.getElementById("right"),
+                numFirst = 0,
+                numSecond = 0;
+                function changeFirst(){
+                    firstImg.src = arrFisrt[numFirst];
+                    first.getElementsByTagName("h2")[0].getElementsByTagName("span")[0].innerHTML = first.getElementsByTagName("p")[0].getElementsByTagName("span")[0].innerHTML = numFirst + 1;
+                    first.getElementsByTagName("p")[0].getElementsByTagName("span")[1].innerHTML = arrFisrt.length;
+                }
+                function changeSecond(){
+                     secondImg.src = arrSecond[numSecond];
+                     second.getElementsByTagName("h2")[0].getElementsByTagName("span")[0].innerHTML =second.getElementsByTagName("p")[0].getElementsByTagName("span")[0].innerHTML = numSecond + 1;
+                    second.getElementsByTagName("p")[0].getElementsByTagName("span")[1].innerHTML = arrSecond.length;
+                }
+                changeFirst();
+                changeSecond();
+
+                firstImg.onclick = function(){
+                    numFirst++;
+                    if(numFirst > arrFisrt.length -1){
+                        numFirst = 0;
+                    }
+                    changeFirst();
+                }
+                secondImg.onclick = function(){
+                    numSecond++;
+                    if(numSecond > arrSecond.length -1){
+                        numSecond = 0;
+                    }
+                    changeSecond();
+                }
+                right.onclick = function(){
+                    numFirst++;
+                    numSecond++;
+                    if(numFirst > arrFisrt.length - 1){
+                        numFirst = 0;
+                    }
+                    if(numSecond > arrSecond.length -1){
+                        numSecond = 0;
+                    }
+                    changeFirst();
+                    changeSecond();
+                }
+               left.onclick = function(){
+                    numFirst--;
+                    numSecond--;
+                    if(numFirst < 0){
+                        numFirst = arrFisrt.length - 1;
+                    }
+                    if(numSecond < 0){
+                        numSecond = arrSecond.length -1;
+                    }
+                    changeFirst();
+                    changeSecond();
+                }
+        }
+    </script>
+</head>
+<body>
+    <input type="button" value="上一组" id="left">
+    <input type="button" value="下一组" id="right">
+    <div id="box" class="clear">
+        <div id="first">
+            <img src="" alt=""/>
+            <h2>第一组第<span></span>张</h2>
+            <p><span></span>/<span></span></p>
+        </div>
+        <div id="second">
+                <img src="" alt=""/>
+                <h2>第二组第<span></span>张</h2>
+                <p><span></span>/<span></span></p>
+            </div>
+    </div>
+</body>
+</html>

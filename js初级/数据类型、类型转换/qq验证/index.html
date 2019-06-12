@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            var input = document.getElementsByTagName("input")[0],
+                btn = document.getElementsByTagName("input")[1];
+                btn.onclick = function(){
+                    if(input.value === ''){
+                        alert('不能为空')
+                    }else if(isNaN(input.value)){
+                        alert('不是数字')
+                    }else if(input.value.charAt(0) == 0){
+                        alert('不能以0开头')
+                    }else if(parseFloat(input.value) !== parseInt(input.value)){
+                        alert('不能是小数')
+                    }else if(input.value.length < 5 || input.value.length >10){
+                        alert('大于5,小于10')
+                    }else{
+                        alert('有效!')
+                    }
+                }
+        }
+    </script>
+</head>
+<body>
+    请输入qq号码:
+    <input type="text">
+    <input type="button" value="判断">
+    <br/>
+    1、有没有输入<br />
+2、输入的是不是数字<br />
+3、不能有0在前面<br />
+4、不能是小数<br />
+5、输入的数字必须在5位以上、10位以内<br />
+
+</body>
+</html>

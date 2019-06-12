@@ -7,7 +7,7 @@
     <title>Document</title>
     <style>
         body{
-            background: tan;
+            background: #000;
         }
         #box{
             width: 500px;
@@ -30,8 +30,115 @@
             height: 200px;
             background: url('./img/loader_ico.gif') center center no-repeat;
         }
-        
+        #box a{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            line-height: 50px;
+            color: brown;
+            text-align: center;
+            font-size: 30px;
+            background: aqua;
+            opacity: 0.6;
+            top: 50%;
+            margin-top: -30px;
+            text-decoration: none;
+        }
+        #box a:hover{
+            opacity: 0.8;
+        }
+        #left{
+            left: 10px
+        }
+        #right{
+            right: 10px
+        }
+        #lists{
+            /* background: red; */
+            width: 280px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 5px;
+            position: absolute;
+            top: 215px;
+            left: 50%;
+            margin-left: -30%;
+        }
+        #lists li{
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background:  lightgreen;
+            border-radius: 5px;
+            margin: 0 0;
+            cursor: pointer;
+            position: relative;
+            margin-left: 30px
+        }
+        #lists .min{
+            position: absolute;
+            width: 30px;
+            height: 20px;
+            bottom: 10px;
+            border: 2px solid saddlebrown;
+            left: 0;
+        }
     </style>
+    <script>
+        window.onload = function(){
+            var show = document.getElementById("show"),
+                left = document.getElementById("left"),
+                right = document.getElementById("right"),
+                lists = document.getElementById("lists"),
+                lis = lists.getElementsByTagName("li"),
+                arrImg = ['img/wf1.jpg','img/wf2.jpg','img/wf3.jpg','img/wf4.jpg','img/wf5.jpg'],
+                num  = 0;
+                show.src = arrImg[num];
+                lis[num].style.background = 'orange';
+
+                right.onclick = function(){
+                    num++;
+                    if(num > (arrImg.length -1)){
+                        num = 0;
+                    }
+                    show.src = arrImg[num];
+                    for(var i = 0; i < lis.length;i++){
+                        lis[i].style.background = '';
+                        lis[num].style.background = 'orange'
+                    }
+                }
+                left.onclick = function(){
+                    num--;
+                    if(num < 0){
+                        num = arrImg.length-1;
+                    }
+                    show.src = arrImg[num];
+                    for(var i = 0; i < lis.length;i++){
+                        lis[i].style.background = '';
+                        lis[num].style.background = 'orange'
+                    }
+                }
+                for(var i =0; i<lis.length;i++){
+                    lis[i].index = i;
+                    lis[i].onmouseover = function(){
+                        //"' + arrImg[this.index] + '"
+                        lis[this.index].innerHTML = '<img class="min" src="' + arrImg[this.index] + '"/>';
+                    }
+                    lis[i].onmouseout = function(){
+                        lis[this.index].innerHTML = '';
+                    }
+                    lis[i].onclick = function(){
+                        for(var j = 0;j<lis.length;j++){
+                            lis[j].style.background = '';
+                        }
+                        lis[this.index].style.background = 'orange';
+                        show.src = arrImg[this.index];
+                        num = this.index;
+                    }
+                }
+        }
+    </script>
 </head>
 <body>
     <div id="box">

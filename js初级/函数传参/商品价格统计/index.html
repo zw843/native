@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function () {
+            var lists = document.getElementById("lists");
+            var lis = lists.getElementsByTagName("li");
+            var ps = document.getElementsByTagName("p")[0];
+            sum();
+            for (var i = 0; i < lis.length; i++) {
+                //遍历所有li,将所有li计数
+                count(lis[i]);
+            }
+
+            function count(li) {
+                var btn = li.getElementsByTagName("input");
+                var strong = li.getElementsByTagName("strong")[0];
+                var ems = li.getElementsByTagName("em")[0];
+                var span = li.getElementsByTagName("span")[0];
+                //记录每个li中首个strong数量
+                var n = strong.innerHTML; //'0'
+                //记录每个li中 首个小计价格
+                var price = parseFloat(ems.innerHTML); //12.5
+                btn[0].onclick = function () {
+                    if (n > 0) { //默认是0
+                        n--;
+                    }
+                    strong.innerHTML = n;
+                    span.innerHTML = n * price + '元';
+                    sum();
+                };
+                btn[1].onclick = function () {
+                    n++;
+                    strong.innerHTML = n;
+                    span.innerHTML = n * price + '元';
+                    sum();
+                }
+            }
+
+            function sum() {
+                var strong = lists.getElementsByTagName("strong");
+                var span = lists.getElementsByTagName("span");
+                var arrEm = [];
+                var total = 0;
+                var cost = 0;
+                for (var i = 0; i < lis.length; i++) {
+                    //累计次数
+                    total += parseInt(strong[i].innerHTML);
+                    //累计单价
+                    cost += parseFloat(span[i].innerHTML);
+                    if (Number(strong[i].innerHTML)) {
+                        //如果strong为0,将所有小计放入arrEm数组中
+                        arrEm[arrEm.length] = parseFloat(lists.getElementsByTagName("em")[i].innerHTML);
+                    }
+                }
+                //var arr = [4,3,6,5,7,2,1]; arr.sort();console.log(arr);普通数组 默认升序
+                //输出结果[1,2,3,4,5,6,7]
+                //var arr = [4,3,6,5,7,2,1];arr.sort();arr.sort(function(a,b){return b-a;});console.log(arr);
+                //输出结果[7,6,5,4,3,2,1] 普通数组 降序
+                arrEm.sort(function (a, b) {
+                    return b - a;
+                })
+                //三元表达式条件 ? 结果1 : 结果2; arrEm有值吗?有的话让其赋值,没有的话变为0.
+                arrEm[0] = arrEm[0] ? arrEm[0] : 0;
+                ps.innerHTML = "商品合计共:" + total + "件,共花费了:" + cost + "元" + "<br/>" + "其中最贵的商品单价是:" + arrEm[0] + "元."
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <ul id="lists">
+        <li>
+            <input type="button" value="-" />
+            <strong>0</strong>
+            <input type="button" value="+" />
+            单价:
+            <em>12.5元</em>
+            <em>干扰标签</em>
+            小计:
+            <span>0元</span>
+        </li>
+        <li>
+            <input type="button" value="-" />
+            <strong>0</strong>
+            <input type="button" value="+" />
+            单价:
+            <em>10.5元</em>
+            小计:
+            <span>0元</span>
+        </li>
+        <li>
+            <input type="button" value="-" />
+            <strong>0</strong>
+            <input type="button" value="+" />
+            单价:
+            <em>8.5元</em>
+            
+            小计:
+            <span>0元</span>
+        </li>
+        <li>
+            <input type="button" value="-" />
+            <strong>0</strong>
+            <input type="button" value="+" />
+            单价:
+            <em>8元</em>
+            小计:
+            <span>0元</span>
+        </li>
+        <li>
+            <input type="button" value="-" />
+            <strong>0</strong>
+            <input type="button" value="+" />
+            单价:
+            <em>14.5元</em>
+            小计:
+            <span>0元</span>
+        </li>
+    </ul>
+    <p>商品合计共:0件,共花费了:0元<br />
+        其中最贵的商品单价是:0元 </p>
+
+</body>
+
+</html>

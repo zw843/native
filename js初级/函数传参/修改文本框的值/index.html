@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        div,
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            width: 500px;
+        }
+        h2{
+            background: tan;
+            color: brown;
+            font-size: 18px;
+            line-height: 30px;
+            font-weight: bold;
+            /* 元素放置在父元素的中部 */
+            vertical-align: middle;
+            text-indent: 20px;
+            margin: 0;
+        }
+        li {
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            line-height: 40px;
+        }
+        li p {
+            display: inline-block;
+            text-indent: 20px;
+            padding-right: 5px;
+            font-size: 16px;
+            color: gray;
+            line-height: 40px;
+            margin: 0;
+        }
+        li span {
+            color: #6BA542;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 0 3px;
+            cursor: pointer;
+        }
+        img {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+        input {
+            margin-left: 16px;
+            line-height: 22px;
+            vertical-align: middle;
+            font-size: 16px;
+            padding: 0 2px;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var lists = document.getElementsByTagName("ul")[0],
+                imgs = lists.getElementsByTagName("img"),
+                lis = lists.getElementsByTagName("li"),
+                inputs = lists.getElementsByTagName("input"),
+                ps = lists.getElementsByTagName("p"),
+                spans = lists.getElementsByTagName("span");
+
+            //初始化页面
+            for(var i = 0; i < inputs.length; i++){
+                //p内容赋值给value
+                inputs[i].value = ps[i].innerHTML;
+                //初始化 input隐藏
+                inputs[i].className = "hide";
+            }
+            for(var i=0; i < spans.length; i++){
+                   //初始化 保存 取消 隐藏
+                spans[i].className = 'hide';
+            }
+            for(var i = 0; i < imgs.length; i++){
+                //edit编辑
+                //编辑所有li  lis[i] = edit(li)
+                edit(lis[i])
+            }
+            function edit(li){
+                var p = li.getElementsByTagName("p")[0],
+                    img = li.getElementsByTagName("img")[0],
+                    input = li.getElementsByTagName("input")[0],
+                    span1 = li.getElementsByTagName("span")[0],
+                    span2 = li.getElementsByTagName("span")[1];
+                    img.onclick = function(){
+                    //点击图片 隐藏文字 图片
+                    p.className = img.className = 'hide';
+                    // 显示初始化className隐藏效果
+                    input.className = span1.className = span2.className = '';
+                }
+                //span1 保存
+                span1.onclick = function(){
+                    //点击保存value重新赋值给p
+                    p.innerHTML = input.value;
+                  // 显示点击图片 p和img className隐藏效果
+                    p.className = img.className = '';
+                    // 隐藏点击图片 input span1 span2 className显示效果
+                    input.className = span1.className = span2.className = 'hide'
+                }
+                //span2 取消
+                span2.onclick = function(){
+                 // 显示点击图片 p和img className隐藏效果
+                    p.className = img.className = '';
+                        // 隐藏点击图片 input span1 span2 className显示效果
+                    input.className = span1.className = span2.className = 'hide';
+                }
+
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <h2>分类名称</h2>
+        <ul>
+            <li>
+                <p>修改文本框的值</p>
+                <img src="./img/pen.png" alt="">
+                <input type="text" value="" />
+                <span>保存</span>
+                <span>取消</span>
+            </li>
+            <li>
+                <p>修改文本框的值</p>
+                <img src="./img/pen.png" alt="">
+                <input type="text" value="" />
+                <span>保存</span>
+                <span>取消</span>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

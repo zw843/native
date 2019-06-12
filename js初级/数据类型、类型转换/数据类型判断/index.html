@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function () {
+            var arr = ['100px', 'abc' - 6, [], -98765, 34, -2, 0, '300', , function () { alert(1);}, null, document, [], true, '200px' - 30, '23.45元', 5, Number('abc'), function () {alert(3);}, 'xyz' - 90  ];
+            var result = document.getElementById("result"),
+                btn1 = document.getElementsByTagName("input")[0],
+                btn2 = document.getElementsByTagName("input")[1],
+                btn3 = document.getElementsByTagName("input")[2],
+                btn4 = document.getElementsByTagName("input")[3],
+                list1 = [],
+                list2 = [],
+                max;
+            list4 = [];
+        /*
+		1、找到arr里所有的数字：-98765, 34, -2, 0, 5
+		2、找到可以转成数字的：'100px', -98765, 34, -2, 0, '300', '23.45元',  5 
+		3、把转成数字以后，最大值判断出来：300
+		4、把 NaN 所在的位置找出来：1 14 17  19
+	    */
+
+        function isNumber(){
+            result.innerHTML = '';
+            list1 = [];
+            for(var i = 0; i < arr.length;i++){
+                if(typeof(arr[i]) === 'number'&& !isNaN(arr[i])){
+                    list1.push(arr[i]);
+                }
+            }
+            for(var i = 0; i < list1.length - 1;i++){
+                result.innerHTML += list1[i] + '|';
+            }
+            result.innerHTML += list1[list1.length-1]
+        }
+        btn1.onclick = function(){
+            isNumber();
+        }
+        function isNumberCan(){
+            result.innerHTML = '';
+            list2 = [];
+            for(var i = 0; i < arr.length; i++){
+                //parseFloat解析一个字符串,并返回一个浮点数 第一个小数点是有效的
+                if(parseFloat(arr[i]) || parseFloat(arr[i]) === 0){
+                    list2.push(arr[i]);
+                }
+            }
+            for(var i = 0; i < list2.length - 1; i++){
+                result.innerHTML += list2[i] + '*****';
+            }
+            result.innerHTML += list2[list2.length - 1];
+        }
+        btn2.onclick = function(){
+            isNumberCan();
+        }
+        function maxNumber(){
+            result.innerHTML = '';
+            for(var i = 0; i < arr.length; i++){
+                if(parseFloat(arr[i]) || parseFloat(arr[i]) === 0){
+                    list2.push(arr[i]);
+                }
+            }
+            max = parseFloat(list2[0]);//假设最大为其中某一个数
+            for(var i = 0;i < list2.length;i++){
+                if(max < parseFloat(list2[i])){
+                    max = parseFloat(list2[i]);
+                }
+            }
+            result.innerHTML = max;
+        }
+        btn3.onclick = function(){
+            maxNumber();
+        }
+        function nanAdress(){
+            result.innerHTML = '';
+            list4 = [];
+            for(var i = 0;i <arr.length;i++){
+                if(typeof(arr[i]) === 'number' && isNaN(arr[i])){
+                    list4.push(i);
+                }
+            }
+            for(var i = 0; i < list4.length - 1; i++){
+                result.innerHTML += list4[i] + '_____';
+            }
+            result.innerHTML += list4[list4.length - 1];
+        }
+        btn4.onclick = function(){
+            nanAdress();
+        }
+        // console.log(arr[19])
+        }
+    </script>
+</head>
+
+<body>
+    <p>
+        arr = [ '100px', 'abc'-6, [], -98765, 34, -2, 0, '300', , function(){alert(1);}, null, document, [], true,
+        '200px'-30,'23.45元', 5, Number('abc'), function(){ alert(3); }, 'xyz'-90 ];
+    </p>
+    <ol>
+        <li>找到arr里所有的数字：-98765, 34, -2, 0, 5</li>
+        <li>找到可以转成数字的：'100px', -98765, 34, -2, 0, '300', '23.45元', 5 </li>
+        <li>把转成数字以后，最大值判断出来：300</li>
+        <li>把 NaN 所在的位置找出来：1 14 17 19</li>
+    </ol>
+    <input type="button" value="找到arr里所有的数字">
+    <input type="button" value="找到可以转成数字的">
+    <input type="button" value="把转成数字以后，最大值判断出来">
+    <input type="button" value="把 NaN 所在的位置找出来">
+    <p id="result"></p>
+</body>
+
+</html>
