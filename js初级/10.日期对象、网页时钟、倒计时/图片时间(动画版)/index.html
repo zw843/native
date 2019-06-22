@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+			display: inline-block;
+			width: 50px;
+			height: 70px; 
+			position: relative;
+			overflow: hidden;
+		}
+		img {
+			border: 0;
+			width: 50px;
+			height: 70px;
+		}
+		ul {
+			margin: 50px auto;
+			width: 400px;
+			font-size: 0;
+		}
+		li div {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+    </style>
+    <script src="./tools.js"></script>
+    <script>
+        window.onload = function(){
+            var ul = document.getElementsByTagName("ul")[0],
+                lis = document.getElementsByTagName("li");
+
+                function two(n){
+                    return n < 10 ? '0' + n : '' + n;
+                }
+                function time(){
+                    var nowTime = new Date(),
+                        nowHours = nowTime.getHours(),
+                        nowMinutes = nowTime.getMinutes(),
+                        nowSeconds = nowTime.getSeconds(),
+                        str = two(nowHours) + ':' + two(nowMinutes) + ':' + two(nowSeconds);
+
+                       function  roll(li,index){
+                           var div = li.getElementsByTagName("div")[0],
+                                imgs = li.getElementsByTagName("img");
+                                
+                                if(str.charAt(index) == ':'){
+                                    imgs[0].src = 'img/colon.jpg';
+                                    setTimeout(function(){
+                                        imgs[0].src = 'img/colon2.jpg';
+                                    },500)
+                                }else{
+                                    imgs[1].src = 'img/' + str.charAt(index) + '.jpg';
+                                    if(imgs[0].src != imgs[1].src){
+                                        doMove(div,'top',10,-70,function(){
+                                            imgs[0].src = imgs[1].src;
+                                            div.style.top = 0 + 'px';
+                                        })
+                                    }
+                                }
+                       }
+                       for(var i = 0; i < lis.length; i++){
+                           roll(lis[i],i);
+                       }
+                }
+                setInterval(time,1000);
+        }
+      
+    </script>
+</head>
+<body>
+        <ul>
+                <li>
+                    <div>
+                        <img src="./img/0.JPG" alt="">
+                        <img src="./img/0.JPG" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <img src="./img/0.JPG" alt="">
+                        <img src="./img/0.JPG" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <img src="./img/colon.JPG" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <img src="./img/0.JPG" alt="">
+                        <img src="./img/0.JPG" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <img src="./img/0.JPG" alt="">
+                        <img src="./img/0.JPG" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <img src="./img/colon.JPG" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <img src="./img/0.JPG" alt="">
+                        <img src="./img/0.JPG" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <img src="./img/0.JPG" alt="">
+                        <img src="./img/0.JPG" alt="">
+                    </div>
+                </li>
+            </ul>
+</body>
+</html>

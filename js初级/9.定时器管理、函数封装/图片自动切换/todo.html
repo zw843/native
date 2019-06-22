@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	img {
+			border: none;
+			margin: 0;
+			padding: 0;
+		}
+		#main {
+			width: 600px;
+			height: 399px;
+			margin: 50px auto;
+			
+			border: 5px solid #c0c0c0;
+			font-size: 0;
+			position: relative;
+			overflow: hidden;
+		}
+		#box {
+			width: 3600px;
+			position: absolute;
+			left: 0;
+		}
+		h1 {
+			margin: 0;
+			padding: 0;
+			font-size: 24px;
+			line-height:36px;
+			padding: 5px;
+		}
+		p {
+			margin: 0;
+			padding: 5px;
+			line-height: 20px;
+			padding-bottom: 10px;
+		}
+		#info {
+			font-size: 14px;
+			position: absolute;
+			width: 600px;
+			top: 399px;
+			left: 0;
+		}
+		#info div {
+			position: absolute;
+			top: 0px;
+			left: 0;
+			width: 600px;
+			background: tan;
+			opacity: 0.7;
+			color: #fff;
+		}
+    </style>
+    <script src="./tools.js"></script>
+    <script>
+      window.onload = function(){
+            var box = document.getElementById("box"),
+                imgs = box.getElementsByTagName("img"),
+                num = 0,
+                timer = null,
+                info = document.getElementById("info"),
+                div = info.getElementsByTagName("div");
+
+            Fn();
+            function Fn(){
+                // setTimeout 在延时后的只执行一次
+                setTimeout(function(){
+                    doMove(div[num],'top',20,0,function(){
+                        num++;
+                        if(num == div.length){
+                            num = 1;
+                            box.style.left = 0;
+                        }
+                        doMove(box,'left',20,-600*num,function(){
+                            doMove(div[num],'top',20,-100);
+                            Fn();
+                        })
+                    })
+                },2000)
+            }
+        }
+    </script>
+</head>
+<body>
+        <div id="main">
+                <div id="box">
+                    <img src="./img/pic1.jpg" alt="">
+                    <img src="./img/pic2.jpg" alt="">
+                    <img src="./img/pic3.jpg" alt="">
+                    <img src="./img/pic4.jpg" alt="">
+                    <img src="./img/pic5.jpg" alt="">
+                    <img src="./img/pic1.jpg" alt="">
+                </div>
+                <div id="info">
+                    <div>
+                        <h1>离婚律师：第1集</h1>
+                        <p>1：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+                    </div>
+                    <div>
+                        <h1>离婚律师：第2集</h1>
+                        <p>2：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+                    </div>
+                    <div>
+                        <h1>离婚律师：第3集</h1>
+                        <p>3：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+                    </div>
+                    <div>
+                        <h1>离婚律师：第4集</h1>
+                        <p>4：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+                    </div>
+                    <div>
+                        <h1>离婚律师：第5集</h1>
+                        <p>5：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+                    </div>
+                    <div>
+                        <h1>离婚律师：第1集</h1>
+                        <p>1：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+                    </div>
+                </div>
+            </div>
+</body>
+</html>

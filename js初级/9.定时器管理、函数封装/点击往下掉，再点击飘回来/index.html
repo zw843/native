@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./tools.js"></script>
+    <script>
+        window.onload = function(){
+            var str = '';
+            var len = 30;
+            var divs = document.getElementsByTagName("div");
+            var timer = null;
+            var num = 0;
+            var flag = true;//flag代表方向
+            var finished = true;
+            for(var i =0; i < len; i++){
+                str += '<div style="border-radius:50%;margin-top: 50px;width:50px;height:50px;background:tan;position:absolute;top:0px;left:' + i*60 + 'px;"></div>';
+            }
+            document.body.innerHTML = str;
+            document.onclick = function(){
+                if(!finished){
+                    return;//如果点击,前一轮未完成直接退出
+                }
+                finished = false;//finished检测上轮是否完成,新一轮finished为false
+                clearInterval(timer);
+                timer = setInterval(function(){
+                    doMove(divs[num],'top',15,flag?300:0,num == len - 1?function(){
+                        finished = true;//当且仅当最后一个div落定,finished才算完成,改为true;
+                        flag = !flag;
+                    }:null);
+                    num++;
+                    if(num == len){
+                        clearInterval(timer);
+                        num = 0;
+                    }
+                },500);
+            }
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

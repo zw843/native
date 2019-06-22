@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html, body, p {
+		margin: 0;
+		padding: 0;
+	}
+    p{
+        border: 1px solid gray;
+        width: 300px;
+        margin: 50px auto;
+        text-align: center;
+        padding: 10px 0;
+    }
+    #score{
+        font-size: 0;
+    }
+    #score a{
+        margin: 0 5px;
+    }
+    #comment{
+        color: aqua;
+        margin-left: 10px;
+    }
+    </style>
+    <script>
+        window.onload = function(){
+            var scores = document.getElementById("score"),
+                as = scores.getElementsByTagName("a"),
+                comment = document.getElementById("comment"),
+                arrImg = ['img/nst.gif','img/nsg.gif','img/sth.gif','img/st.gif'],
+                lastImg = [],
+                lastComment = '&nbsp;&nbsp;&nbsp;&nbsp;',
+                num = 0;
+                function score(index,imgSrc){
+                    for(var i = 0; i <= index; i++){
+                        as[i].getElementsByTagName("img")[0].src = imgSrc;
+                    }
+                    switch(index){
+                        case 0:
+                        comment.innerHTML = '糟糕透了';
+                        break;
+                        case 1:
+                        comment.innerHTML = '感觉一般';
+                        break;
+                        case 2:
+                        comment.innerHTML = '凑合能用';
+                        break;
+                        case 3:
+                        comment.innerHTML = '相当不错';
+                        break;
+                        case 4:
+                        comment.innerHTML = '墙裂推荐';
+                    }
+                }
+                for(var i = 0; i < as.length;i++){
+                    as[i].index = i;
+                    as[i].onmouseover = function(){
+                        num = this.index;
+                        for(var i = 0; i < as.length; i++){
+                            lastImg[i] = as[i].getElementsByTagName("img")[0].src;
+                        }
+                        score(as.length-1,arrImg[0]);
+                        if(num < 2){
+                            score(num,arrImg[1]);
+                        }else{
+                            score(num,arrImg[2]);
+                        }
+                    }
+                    as[i].onmouseout = function(){
+                        for(var i = 0; i < as.length; i++){
+                            as[i].getElementsByTagName("img")[0].src = lastImg[i];
+                        }
+                        comment.innerHTML = lastComment;
+                    }
+                    as[i].onclick = function(){
+                        num = this.index;
+                        score(as.length-1,arrImg[0]);
+                        if( num < 2){
+                            score(num,arrImg[1]);
+                        }else{
+                            score(num,arrImg[3]);
+                        }
+                        for(var i = 0; i < as.length; i++){
+                            lastImg[i] = as[i].getElementsByTagName("img")[0].src;
+                        }
+                        lastComment = comment.innerHTML;
+                    }
+                }
+        }
+      
+    </script>
+</head>
+<body>
+    <p>五星好评:
+        <span id="score">
+            <a href="javascript:void(0)"><img src="./img/nst.gif" alt=""></a>
+            <a href="javascript:void(0)"><img src="./img/nst.gif" alt=""></a>
+            <a href="javascript:void(0)"><img src="./img/nst.gif" alt=""></a>
+            <a href="javascript:void(0)"><img src="./img/nst.gif" alt=""></a>
+            <a href="javascript:void(0)"><img src="./img/nst.gif" alt=""></a>
+        </span>
+        <span id="comment">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </p>
+    
+</body>
+</html>
+<!-- function rating(index, imgSrc){
+    for(var i=0; i<=index; i++){
+        aA[i].getElementsByTagName('img')[0].src = imgSrc;
+    }
+    switch(index){
+        case 0:
+            oComment.innerHTML = '极差';
+            break;
+        case 1:
+            oComment.innerHTML = '很差';
+            break;
+        case 2:
+            oComment.innerHTML = '还行';
+            break;
+        case 3:
+            oComment.innerHTML = '不错';
+            break;
+        case 4:
+            oComment.innerHTML = '推荐';
+    }
+} -->

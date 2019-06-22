@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	html, body {
+			margin: 0;
+			padding: 0;
+			background: #EFEFE7;
+		}
+        p {
+			background: tan;
+			width: 600px;
+			padding: 50px;
+			font-family: '微软雅黑';
+			font-size: 22px;
+			line-height: 36px;
+		}
+        #main {
+			width: 800px;
+			margin: 50px auto;
+			position: relative;
+		}
+        #btn {
+			width: 100px;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+        #btn a {
+			/* display: block; */
+			text-decoration: none;
+			margin-bottom: 5px;
+			color: #fff;
+			width: 100px;
+			height: 40px;
+			line-height: 40px;
+			background: #C0C0C0;
+			text-align: center;
+			display: none;
+			font-weight: bold;
+			font-family: '微软雅黑';
+			font-size: 20px;
+		}
+        #btn a:hover {
+			background: #E76308;
+		}
+        #btn a:first-child {
+			background: #94948C;
+			display: block;
+		}
+        #box {
+			border: 10px solid cornsilk;
+			width: 640px;
+			padding: 20px;
+			background: #E7E7B5;
+			font-size: 0;
+			display: none;
+			position: relative;
+		}
+        #box span {
+			font-family: '微软雅黑';
+			font-size: 20px;
+			padding: 5px 20px;
+			cursor: pointer;
+		}
+        #box span.active {
+			background: #E73100;
+			color: #fff;
+		}
+        #search, #replace {
+			border-top: 3px solid saddlebrown;
+			margin-top: 3px;
+		}
+        #search input[type="text"], #replace input[type="text"] {
+			margin: 20px 0px;
+			padding: 2px;
+			height: 24px;
+			width: 200px;
+			font-size: 24px;
+			margin-right: 10px;
+		}
+        #search input[type="button"], #replace input[type="button"] {
+			margin: 20px 0;
+			height: 30px;
+			width: 56px;
+			font-size: 20px;
+		}
+        #close {
+			font-size: 24px;
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			cursor: pointer;
+		}
+    </style>
+    <script>
+        window.onload = function(){
+            var btns = document.getElementById("btn").getElementsByTagName("a"),
+                box = document.getElementById("box"),
+                search = document.getElementById("search"),
+                replace = document.getElementById("replace"),
+                spans = box.getElementsByTagName("span"),
+                searchBtn = search.getElementsByTagName("input")[1],
+                replaceBtn = replace.getElementsByTagName("input")[2],
+                searchInput = search.getElementsByTagName("input")[0],
+                replaceInputs = replace.getElementsByTagName("input"),
+                close = document.getElementById("close"),
+                p = document.getElementsByTagName("p")[0],
+                str = p.innerHTML;
+                //点击展开
+                btns[0].onclick = function(){
+                    btns[1].style.display = 'block';
+                    btns[2].style.display = 'block'
+                }
+                //点击查找 清除按钮 展示搜索界面
+                btns[1].onclick = function(){
+                    clearBtns();
+                    searchShow();
+                }
+                //点击替换 清除按钮 展示替换界面
+                btns[2].onclick = function(){
+                    clearBtns();
+                    replaceShow();
+                }
+                //搜索 替换  函数赋给点击事件
+                spans[0].onclick = searchShow;
+                spans[1].onclick = replaceShow;
+                //点击x 隐藏box
+                close.onclick = function(){
+                    box.style.display = 'none'
+                }
+                //搜索展示函数
+                function searchShow(){
+                p.innerHTML  = str;
+                spans[0].className = 'active';
+                spans[1].className = '';
+                search.style.display = 'block';
+                replace.style.display = 'none';
+                }
+                //替换展示函数
+                function replaceShow(){
+				p.innerHTML = str;
+				spans[1].className = 'active';
+				spans[0].className = '';
+				search.style.display = 'none';
+				replace.style.display = 'block';
+			}
+            //清除按钮
+            function clearBtns(){
+				btns[1].style.display = 'none';
+				btns[2].style.display = 'none';
+				box.style.display= 'block';
+			}
+            //点击搜索按钮
+            searchBtn.onclick = function(){
+                if(!searchInput.value){
+                    alert("内容不能为空");
+                    p.innerHTML = str;
+                }else{
+                    //indexOf 可返回某个指定的字符串值在字符串中首次出现的位置
+                    if(str.indexOf(searchInput.value) == -1){
+                        alert('未找到相关【 '+ searchInput.value + '】内容');
+                        p.innerHTML = str;
+                        searchInput.value = '';
+                    }else{
+                        p.innerHTML = str;
+                        //split把一个字符串分割成字符串数组
+                        var arr = str.split(searchInput.value);
+                        p.innerHTML = arr.join('<span style="background:skyblue">' + searchInput.value + '</span>');
+                        searchInput.value = '';
+                    }
+                }
+            }
+            replaceBtn.onclick = function(){
+                if(!replaceInputs[0].value){
+                    p.innerHTML = str;
+                }else{
+                    if(str.indexOf(replaceInputs[0].value) == -1){
+                        alert('未找到相关【 '+ replaceInputs[0].value + '】内容');
+                    }else{
+                        if(!replaceInputs[1].value){
+                            //confirm 用于显示一个带有指定消息和 OK 及取消按钮的对话框
+                            if(!confirm('确定要删除?')){
+                                replaceInputs[0].value = '';
+                                return;
+                            }
+                        }
+                        p.innerHTML = str;
+                        var arr = str.split(replaceInputs[0].value);
+                        p.innerHTML = arr.join(replaceInputs[1].value);
+                        str = p.innerHTML;
+                        replaceInputs[0].value = '';
+                        replaceInputs[1].value = '';
+                    }
+                }
+            }
+
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="main">
+        <p>　参考消息网6月16日报道
+            外媒称，美国磐聚网公司对官方统计数字的分析显示，5月中国国际贸易活动同比下跌3.4%，主要由于进口大跌8.5%。进口创2016年7月以来最大跌幅，也导致3个月进口平均水平下降4.2%，今年一季度则下跌了4.7%。
+        </p>
+        <div id="btn">
+            <a href="javascript:">展开</a>
+            <a href="javascript:">查找</a>
+            <a href="javascript:">替换</a>
+        </div>
+        <div id="box">
+            <div id="close">×</div>
+            <span>查找</span>
+            <span>替换</span>
+            <div id="search">
+                <input type="text">
+                <input type="button" value="查找">
+            </div>
+            <div id="replace">
+                <input type="text">
+                <input type="text">
+                <input type="button" value="替换">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

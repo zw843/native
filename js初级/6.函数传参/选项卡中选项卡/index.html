@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	body, ul, li, h2 {
+			padding: 0;
+			margin: 0;
+		}
+		h2 {
+			font-size: 14px;
+		}
+		li {
+			list-style: none;
+		}
+        #tab {
+			width: 960px;
+			background: rgb(205, 229, 243);
+			overflow: hidden;
+            margin: 0 auto;
+		}
+        #nav {
+			width: 150px;
+			float: left;
+		}
+        #nav li {
+			width: 143px;
+			height: 82px;
+			border: 1px solid palegreen;
+			text-align: center;
+			line-height: 82px;
+			font-size: 14px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+        #nav li.selected {
+            background: navajowhite;
+        }
+        #content {
+            /* width: 810px;
+            height: 335px; */
+			float: right;
+            position: relative;
+		}
+        #content img {
+            width: 810px;
+            height: 335px;
+            display: none;
+        }
+        #content ul {
+			position: absolute;
+			bottom: 0;
+            width: 100%;
+            /* 实现两端对齐文本效果 */
+            /* text-align: justify; */
+			background: wheat;
+			opacity: 0.6;
+            display: none;
+		}
+        #content  li {			
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #eee;
+            padding: 0 20px;
+            cursor: pointer;
+            /* 此元素会作为一个表格单元格显示（类似 <td> 和 <th>） */
+            display: table-cell;
+		}
+        #content ul.show {
+            /* 此元素会作为块级表格来显示（类似 <table>），表格前后带有换行符。 */
+            display: table;
+        }
+        #content li.active {
+            background: gray;
+            opacity: 0.8;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var arrImg = [
+                ['img/wf1.jpg','img/wf2.jpg','img/wf3.jpg'],
+                ['img/wf2.jpg','img/wf3.jpg','img/wf4.jpg','img/wf1.jpg'],
+                ['img/wf3.jpg','img/wf4.jpg','img/wf5.jpg','img/wf1.jpg','img/wf2.jpg'],
+                ['img/wf2.jpg','img/wf1.jpg']
+            ],
+            nav = document.getElementById("nav"),
+            navLis = nav.getElementsByTagName("li"),
+            content = document.getElementById("content"),
+            uls = content.getElementsByTagName("ul"),
+            imgs = content.getElementsByTagName("img"),
+            num = 0,
+            //获取第一个ul中所有li
+            subLis = uls[0].getElementsByTagName("li");
+            smallTab(uls[0]);
+            for(var i = 0; i < navLis.length; i++){
+                //遍历左边tab栏所有li 让索引和数量同步
+                navLis[i].index = i;
+                navLis[i].onclick = function(){
+                    for(var i = 0; i < navLis.length; i++){
+                        //点击nav中任意li 排他思想 清空所有样式
+                        num = this.index;
+                        navLis[i].className = '';
+                        uls[i].className = '';
+                        imgs[i].style.display = 'none';
+                    }
+                    //让当前样式为选中状态样式 当前ul img 显示
+                    this.className = 'selected';
+                    uls[num].className = 'show';
+                    imgs[num].style.display = 'block';
+                    smallTab(uls[num]);
+                }
+            }
+            function smallTab(smallUl){
+                //smallUl作为一个形参 和uls是一个意思
+                lis = smallUl.getElementsByTagName("li");
+                for(var i = 0; i < lis.length; i++){
+                    // if(lis[i].className){
+                    //     //如果有active样式 则让数组图片所在位置和imgs路径一致
+                    //     imgs[num].src = arrImg[num][i];
+                    // }
+                    lis[i].index = i;
+                    lis[i].onclick = function(){
+                        for(var i = 0; i < lis.length; i++){
+                            lis[i].className = '';
+                        }
+                        this.className = 'active';
+                        imgs[num].src = arrImg[num][this.index];
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="tab">
+        <ul id="nav">
+            <li class="selected">最热团购</li>
+            <li>商城特惠</li>
+            <li>名品推荐</li>
+            <li>缤纷活动</li>
+        </ul>
+        <div id="content">
+            <img src="img/wf1.jpg" style="display: block" />
+            <ul class="show">
+                <li class="active">最热团购Tab1</li>
+                <li>最热团购Tab2</li>
+                <li>最热团购Tab3</li>
+            </ul>
+            <img src="img/wf2.jpg" />
+            <ul>
+                <li class="active">商城特惠Tab1</li>
+                <li>商城特惠Tab2</li>
+                <li>商城特惠Tab3</li>
+                <li>商城特惠Tab4</li>
+            </ul>
+            <img src="img/wf3.jpg" />
+            <ul>
+                <li class="active">名品推荐Tab1</li>
+                <li>名品推荐Tab2</li>
+                <li>名品推荐Tab3</li>
+                <li>名品推荐Tab4</li>
+                <li>名品推荐Tab5</li>
+            </ul>
+            <img src="img/wf4.jpg" />
+            <ul>
+                <li class="active">缤纷活动Tab1</li>
+                <li>缤纷活动Tab2</li>
+             
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

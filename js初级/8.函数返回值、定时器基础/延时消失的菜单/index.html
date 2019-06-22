@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		#header {
+			width: 860px;
+			margin: 10px auto;
+		}
+		li, #nav div {
+			list-style: none;
+			float: left;
+			height: 100%;
+			line-height: 30px;
+		}
+		a {
+			text-decoration: none;
+			color: #3C6EA8;
+			padding: 0 15px;
+			border-right: 1px solid #8F77C3;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+		li:last-child a {
+			border-right: none;
+		}
+		ul {
+			overflow: hidden;
+			background: #E3ECF1;
+			border-radius: 10px;
+			display: none;
+		}
+		#nav {
+			background: tan;
+			width: 800px;
+			height: 30px;
+			border-radius: 20px;
+			margin: 10px auto;
+			padding: 4px 10px 4px 50px;
+			color: #fff;
+			display: block;
+		}
+		#nav a {
+			color: #fff;
+			display: block;
+			border-radius: 10px;
+			padding: 0 30px;
+			border-right: none;
+		}
+		#nav a:hover {
+			background: thistle;
+			text-decoration: none;
+		}
+		#nav .last {
+			float: right;
+		}
+		#nav .last a:hover {
+			background: #4273A5;
+		}
+
+		#home {
+			width: 350px;
+			position: relative;
+			left: 40px;		
+		}
+		#aboutUs {
+			width: 380px;
+			position: relative;
+			left: 140px;
+		}
+		#works {
+			width: 330px;
+			position: relative;
+			left: 280px;
+		}  
+		#blog {
+			width: 470px;
+			position: relative;
+			left: 360px;
+		}
+    </style>
+    <script>
+        window.onload = function(){
+            var timer = null;
+            function Fn(id,tag){
+                if(tag){
+                    return document.getElementById(id).getElementsByTagName(tag);
+                }else{
+                    return document.getElementById(id);
+                }
+            }
+            for( var i = 0; i < Fn('header','ul').length; i++){
+                Fn('nav','a')[i].index = i;
+                Fn('header','ul')[i].index = i;
+
+                //鼠标悬停在主导航连接上的动作
+                Fn('nav','a')[i].onmouseover = function(){
+                    for(var j = 0; j < Fn('header','ul').length;j++){
+                        Fn('header','ul')[j].style.display = 'none';
+                    }
+                    Fn('header','ul')[this.index].style.display = 'block';
+                    clearTimeout(timer);
+                }
+                //鼠标离开主导航链接上的动作
+                Fn('nav','a')[i].onmouseout = function(){
+                    var that = this.index;
+                //setTimeout只在指定时间后执行一次
+                //setInterval以指定时间为周期循环执行
+                    timer = setTimeout(function(){
+                        Fn('header','ul')[that].style.display = 'none';
+                    },200)
+                }
+                // 鼠标悬停在子导航条上的动作
+                Fn('header','ul')[i].onmouseover = function(){
+                    this.style.display = 'block';
+                    clearTimeout(timer);
+                }
+                //鼠标离开子导航条的动作
+                Fn('header','ul')[i].onmouseout = function(){
+                    var that = this;
+                    timer =setTimeout(function(){
+                        that.style.display = 'none';
+                    },1500)
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+        <div id="header">
+                <div id="nav">
+                    <div><a href="javascript:">首页</a></div>
+                    <div><a href="javascript:">关于我们</a></div>
+                    <div><a href="javascript:">作品</a></div>
+                    <div><a href="javascript:">博客</a></div>
+                    <div class="last"><a href="#">>>更多</a></div>
+                </div>
+                <ul id="home">
+                    <li><a href="#">最近更新</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                </ul>
+                <ul id="aboutUs">
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">联系我们</a></li>
+                </ul>
+                <ul id="works">
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                </ul>
+                <ul id="blog">
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                    <li><a href="#">项目练习</a></li>
+                </ul>
+            </div>
+</body>
+</html>

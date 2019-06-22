@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            border:0;
+            float: left;
+            margin: 0 5px;
+        }
+        li {
+			list-style: none;
+			border: 1px solid tan;
+			width: 40px;
+			padding: 5px;
+			text-align: center;
+			font-size: 12px;
+		}
+        a {
+			text-decoration: none;
+			display: block;
+			color: thistle;
+		}
+        #box {
+			border: 1px solid #FF6300;
+			padding: 5px;
+			overflow: hidden;
+			width: 294px;
+			margin: 50px auto;
+		}
+        #left {
+			float: left;
+		}
+        #right {
+			float: left;
+			right: 0;
+			top: 0;
+		}
+    </style>
+  <script>
+        window.onload = function(){
+            var img = document.getElementsByTagName("img")[0],
+                lis = document.getElementsByTagName("li"),
+                timer = null,
+                imgs = ['img/1.png', 'img/2.png', 'img/3.png', 'img/4.png', 'img/5.png', 'img/6.png', 'img/7.png', 'img/8.png', 'img/9.png', 'img/10.png', 'img/11.png', 'img/12.png', 'img/13.png', 'img/14.png'],
+                num = 0;
+                // flag = 0;
+                function clearAll(){
+                    for(var i = 0; i < lis.length;i++){
+                        lis[i].style.background = '';
+                        lis[i].getElementsByTagName('a')[0].style.color = '';
+                    }
+                }
+                for(var i = 0; i < lis.length; i++){
+                    lis[i].index = i;
+                    lis[i].onmouseout = function(){
+                        this.style.background = '';
+                        this.getElementsByTagName("a")[0].style.color = '';
+                        timer = setInterval(autplay,1000);
+                    }
+                    lis[i].onmouseover = function(){
+                        clearInterval(timer);
+                        clearAll();
+                        this.style.background = 'skyblue';
+                        this.getElementsByTagName('a')[0].style.color = '#FF6300';
+                        img.src = imgs[this.index];
+                    }
+                }
+              
+                function autplay(){
+                    clearAll();
+                    lis[num].style.background = 'skyblue';
+                    lis[num].getElementsByTagName("a")[0].style.color = '#FF6300';
+                    //img = document.getElementsByTagName("img")[0] num表示任意位置
+                    img.src = imgs[num];
+                    //当num<7时,num递增 等于7时 让num变为最大值前面一位
+                    if(num < lis.length/2){
+                        num++;
+                        if(num == lis.length/2){
+                            num = lis.length -1;
+                        }
+                    }else{
+                     
+                        num--;
+                        if(num == lis.length/2 -1){
+                            num = 0;
+                        }
+                    }
+                }
+                timer = setInterval(autplay,1000);
+        }
+  </script>
+</head>
+
+<body>
+    <div id="box">
+        <ul id="left">
+            <li><a href="#">连衣裙</a></li>
+            <li><a href="#">雪纺</a></li>
+            <li><a href="#">T恤</a></li>
+            <li><a href="#">铅笔裤</a></li>
+            <li><a href="#">婚纱</a></li>
+            <li><a href="#">外套</a></li>
+            <li><a href="#">连体裤</a></li>
+        </ul>
+        <img src="./img/1.png" />
+        <ul id="right">
+            <li><a href="#">包包</a></li>
+            <li><a href="#">凉鞋</a></li>
+            <li><a href="#">单鞋</a></li>
+            <li><a href="#">太阳镜</a></li>
+            <li><a href="#">丝袜</a></li>
+            <li><a href="#">帆布鞋</a></li>
+            <li><a href="#">情侣装</a></li>
+        </ul>
+    </div>
+</body>
+
+</html>

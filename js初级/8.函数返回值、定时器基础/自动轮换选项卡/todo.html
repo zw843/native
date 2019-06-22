@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+        #tab {
+			border: 1px solid #000;
+			margin: 50px auto;
+			width: 240px;
+			padding: 10px;
+			position: relative;
+		}
+        #nav li {
+			display: inline-block;
+			background: tan;
+			padding: 10px 20px;
+		}
+        img {
+		margin: 3px;
+			width: 170px;
+			height: 180px;
+			display: block;
+          /* 元素盒子的边不能和前面的浮动元素相邻 */
+			clear: left;
+		}
+        .box {
+			position: absolute;
+			left: 190px;
+			top: 48px;
+		}
+        .box li {
+			background: rgb(135, 224, 61);
+			padding: 21px 10px;
+			margin-top: 1px;
+		}
+    </style>
+    <script>
+        window.onload = function(){
+            var imgs = ['img/01.jpg','img/02.jpg','img/03.jpg','img/04.jpg','img/05.jpg','img/06.jpg','img/7.png','img/8.png'],
+                nav = document.getElementById("nav"),
+                uls = document.getElementsByTagName("ul"),
+                img = document.getElementsByTagName("img")[0],
+                arrLi = [],
+                flag = 0,
+                num = 0,
+                timer = null;
+        //遍历ul 拿到ul下所有li 遍历所有li 放入arrLi数组
+        for(var i = 1; i < uls.length; i++){
+            var lis = uls[i].getElementsByTagName("li");
+            for(var j = 0; j < lis.length; j++){
+                arrLi.push(lis[j]);
+            }
+        }
+		//清除所有 li背景色和字体颜色改变
+        function clearAll(){
+            for(var i = 0; i < arrLi.length;i++){
+                arrLi[i].style.background = "#eee";
+                arrLi[i].style.color = "skyblue";
+            }
+			//遍历当前菜单所有li  让其背景色和字体颜色改变
+            for(var i = 0; i < uls[0].getElementsByTagName('li').length; i++){
+                uls[0].getElementsByTagName("li")[i].style.cssText = 'background:#51c73b; color: skyblue';
+            }
+        }
+		// console.log(arrLi.length)  6
+		function autoplay(){
+		clearAll();
+		//数组中所有li背景色字体颜色改变
+		arrLi[num].style.cssText =  'background: orange; color: #fff';
+		//将数组中图片赋给当前图片路径	
+		img.src = imgs[num];
+		if(flag == 0){
+			//当前为空 则菜单一背景色字体颜色改变 2号盒子(4,5,6,)隐藏 1号盒子(1,2,3)显示
+			nav.getElementsByTagName("li")[0].style.cssText =  'background:red; color: #fff';
+			uls[2].style.display = 'none';
+			uls[1].style.display = 'block';
+			num++;
+			//并且如果num 数量等于 总li数量一半  则不为空
+			if(num == arrLi.length/2){
+				flag = 1;
+			}
+		}else{
+			//当前不为空 其菜单二背景和颜色改变
+			nav.getElementsByTagName("li")[1].style.cssText = 'background:red; color: #fff';
+			uls[1].style.display = 'none';
+			uls[2].style.display = 'block';
+			num++;
+			//此时num 为 数组li长度6时,变为空,num从0开始
+			if(num == arrLi.length){
+				flag = 0;
+				num = 0;
+			}
+		}
+		}
+		timer = setInterval(autoplay,1500);
+        }
+	
+    </script>
+</head>
+<body>
+    <div id="tab">
+		<ul id="nav">
+			<li>菜单一</li>
+			<li>菜单二</li>
+		</ul>
+		<img src="./img/01.jpg" />
+		<ul class="box">
+			<li>图片1</li>
+			<li>图片2</li>
+			<li>图片3</li>
+		</ul>
+		<ul class="box">
+			<li>图片4</li>
+			<li>图片5</li>
+			<li>图片6</li>
+		</ul>
+	</div>
+</body>
+</html>

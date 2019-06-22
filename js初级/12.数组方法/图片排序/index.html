@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        ul,
+        h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #btn {
+            width: 1008px;
+            height: 60px;
+            background: seashell;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #btn li {
+            display: inline-block;
+            background: burlywood;
+            color: #fff;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            font-family: '微软雅黑';
+            margin-top: 12px;
+            cursor: pointer;
+        }
+
+        #btn li:hover {
+            opacity: 0.5;
+        }
+
+        #showbox {
+            width: 988px;
+            margin: 0 auto;
+            background: #f1f1f1;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        #showbox li {
+            float: left;
+            padding: 10px;
+            background: rgb(231, 229, 229);
+            border: 1px solid #f1f1f1;
+        }
+
+        h2 {
+            font-family: '微软雅黑';
+            font-size: 16px;
+            font-weight: bold;
+            color: tomato;
+            text-align: center;
+            background: #f1f1f1;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementById("btn").getElementsByTagName("li"),
+                showbox = document.getElementById("showbox"),
+                lis = showbox.getElementsByTagName("li"),
+                flag = true,
+                arr = [],
+                str = '';
+
+                for(var i = 0; i<lis.length;i++){
+                  arr.push(lis[i])
+                }
+                // console.log(arr.length)
+                btn[0].onclick = function(){
+                    arr.reverse();
+                    str = '';    
+                    for(var i = 0; i < arr.length; i++){
+                        str += '<li>' + arr[i].innerHTML + '</li>';
+                    }
+                    showbox.innerHTML = str;
+                    this.innerHTML = flag ? '从小到大':'从大到小';
+                    flag = !flag;
+                }
+                btn[1].onclick = function(){
+                    var arr2 = [];
+                    for(var i = 0; i < lis.length;i++){
+                        arr2.push(lis[i]);
+                    }
+                    arr2.sort(function(a,b){
+                        return Math.random() - 0.5;
+                    })
+                    str = '';
+                    for(var i = 0; i < arr2.length; i++){
+                        str += '<li>' + arr2[i].innerHTML + '</li>'
+                    }
+                    showbox.innerHTML = str;
+                }
+        }
+     
+    </script>
+</head>
+
+<body>
+    <ul id="btn">
+        <li>从大到小</li>
+        <li>打乱顺序</li>
+    </ul>
+    <ul id="showbox">
+        <li>
+            <img src="./img/01.jpg">
+            <h2>1-温馨办公</h2>
+        </li>
+        <li>
+            <img src="./img/02.jpg">
+            <h2>2-游戏桌面</h2>
+        </li>
+        <li>
+            <img src="./img/03.jpg">
+            <h2>3-汽车摇滚</h2>
+        </li>
+        <li>
+            <img src="./img/04.jpg">
+            <h2>4-狭路相逢</h2>
+        </li>
+        <li>
+            <img src="./img/05.jpg">
+            <h2>5-棒球小子</h2>
+        </li>
+        <li>
+            <img src="./img/06.jpg">
+            <h2>6-球鞋动力</h2>
+        </li>
+        <li>
+            <img src="./img/07.jpg">
+            <h2>7-游戏官网</h2>
+        </li>
+        <li>
+            <img src="./img/08.jpg">
+            <h2>8-指尖社区</h2>
+        </li>
+    </ul>
+</body>
+
+</html>

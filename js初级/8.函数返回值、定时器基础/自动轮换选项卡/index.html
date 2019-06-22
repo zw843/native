@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body { background: tan; }   
+        ul { margin:0; padding:0; list-style:none; }
+        #tab { width:300px; border:1px solid firebrick; margin:20px auto 0; padding:10px; background: burlywood; font-size:14px; font-family:微软雅黑; }
+        #tab .nav { height:30px;margin-bottom: 1px }
+        #tab .nav li { width:80px; height:30px; text-align:center; line-height:30px; margin-right:1px; float:left; background: sandybrown; }
+        #tab .nav .active { background:maroon; color:rgb(25, 238, 231); }
+        
+        #tab .box { width:300px; height:90px; padding-top:1px; display:none; }
+        #tab .box img { width:200px; height:89px; float:left; }
+        #tab .box ul { width:100px; float:right; }
+        #tab .box li { height:29px; line-height:29px; background:#7be053; text-indent:20px; margin-bottom:1px; }
+        #tab .box .active { background:#69C; color:#fff; }
+
+    </style>
+</head>
+<body>
+    <div id="tab">
+        <ul class="nav">
+            <li class="active">菜单一</li>
+            <li>菜单二</li>
+        </ul>
+        <div class="box" style="display:block;">
+            <img src="./img/01.jpg" />
+            <ul>
+                <li class="active">图片1</li>
+                <li>图片2</li>
+                <li>图片3</li>
+            </ul>
+        </div>
+        <div class="box">
+            <img src="./img/04.jpg" />
+            <ul>
+                <li class="active">图片4</li>
+                <li>图片5</li>
+                <li>图片6</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var tab = document.getElementById("tab");
+        var ul = tab.getElementsByTagName("ul")[0];
+        var btns = ul.getElementsByTagName("li");
+        var divs = tab.getElementsByTagName("div");
+        var num = now = 0;
+        var arr = [
+            ['img/01.jpg','img/02.jpg','img/03.jpg'],
+            ['img/04.jpg','img/05.jpg','img/06.jpg']
+        ];
+        setInterval(function(){
+            num++;
+            if( num == 3){
+                num = 0;
+                //if(条件){真结果}else{假结果}
+                now = now == 0 ? 1 : 0 ;
+            }
+            var lis = divs[now].getElementsByTagName("li");
+            var img = divs[now].getElementsByTagName("img")[0];
+
+            //父级li变化
+            for(var i = 0; i < btns.length; i++){
+                btns[i].className = '';
+                divs[i].style.display = 'none';
+            }
+            btns[now].className = 'active';
+            divs[now].style.display = 'block';
+            //子级li变化
+            for(var i = 0; i < lis.length; i++){
+                lis[i].className = '';
+            }
+            lis[num].className = 'active';
+            img.src = arr[now][num];
+        },1500)
+    </script>
+</body>
+</html>

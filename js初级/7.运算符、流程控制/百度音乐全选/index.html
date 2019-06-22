@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+        #box {
+			border: 1px solid ghostwhite;
+			width: 400px;
+			margin: 20px auto;
+			font-size: 14px;
+		}
+        #list li {
+			height: 30px;
+			line-height: 30px;
+		}
+        #tab {
+			border-top: 1px solid #DEDEDE;
+			border-bottom: 2px solid firebrick;
+			width: 100%;
+			height: 35px;
+			line-height: 35px;
+		}
+        #tab li {
+			float: left;
+			width: 100px;
+			text-align: left;
+		}
+        #tab .button{
+			border: 1px solid darkcyan;
+			height: 20px;
+			margin: 6px 5px;
+			width: 60px;
+			line-height: 24px;
+			padding-left: 10px;
+			border-radius: 5px;
+			text-align: center;
+			opacity: 0.3;
+            line-height: 20px;
+		}
+        #add {
+			background: url('img/add.png') no-repeat 5px center;
+		}
+		#favorite {
+			background: url('img/favorite.gif') no-repeat 5px center;
+		}
+		#delete {
+			background: url('img/delete.png') no-repeat 5px center;
+		}
+        #list .title {
+			display: inline-block;
+			width: 280px;
+		}
+    </style>
+    <script>
+        window.onload = function(){
+            var list = document.getElementById("list"),
+                lis = list.getElementsByTagName("li"),
+                tabs = document.getElementById("tab"),
+                btns = tabs.getElementsByTagName("div"),
+                checkbox = list.getElementsByTagName("input"),
+                checkAll = tabs.getElementsByTagName("input")[0],
+                flag = 0,
+                nativeColor = [],
+                num;
+            //设置各行底色变化
+            for(var row = 0; row < lis.length; row++){
+                if(row%2){
+                    lis[row].style.background = "tan"
+                }else{
+                    lis[row].style.background = "yellowgreen"
+                }
+                nativeColor[row] = lis[row].style.background;
+            }
+            for(var i = 0; i < checkbox.length; i++){
+                checkbox[i].index = i;
+                checkbox[i].onclick = function(){
+                    num = this.index;
+                    flag = 0;
+                    for(var i = 0; i < checkbox.length; i++){
+                        flag += Number(checkbox[i].checked)
+                    }
+                    if(flag == checkbox.length){
+                        checkAll.checked = true;
+                    }else{
+                        checkAll.checked= false;
+                    }
+                    if(!flag){
+                        for(j = 0;j < btns.length; j++){
+                            btns[j].style.opacity = '0.6'
+                        }
+                    }else{
+                        for(j = 0;j<btns.length;j++){
+                            btns[j].style.opacity = '1'
+                        }
+                    }
+                    if(this.checked){
+                        lis[num].style.background = 'skyblue';
+                    }else{
+                        lis[num].style.background = nativeColor[num];
+                    }
+                }
+            }
+            for(var i = 0; i < lis.length;i++){
+                lis[i].index = i;
+                lis[i].onmouseover = function(){
+                    this.style.background = 'skyblue'
+                }
+                lis[i].onmouseout = function(){
+                    if(!checkbox[this.index].checked){
+                        this.style.background = nativeColor[this.index];
+                    }
+                }
+            }
+            checkAll.onclick = function(){
+                if(!this.checked){
+                    for(var i = 0; i<checkbox.length;i++){
+                        checkbox[i].checked = false;
+                        lis[i].style.background = nativeColor[i];
+                    }
+                    for(var i = 0; i< btns.length;i++){
+                        btns[i].style.opacity = '0.6'
+                    }
+                }else{
+                    for(var i = 0;i < checkbox.length;i++){
+                        checkbox[i].checked = true;
+                        lis[i].style.background = 'skyblue'
+                    }
+                    for(var i = 0; i < btns.length;i++){
+                        btns[i].style.opacity = '1';
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+        <div id="box">
+                <ul id="list">
+                    <li>
+                        <input type="checkbox">
+                        <span class="title">私奔</span>
+                        <span class="singer">梁博</span>
+                    </li>
+                    <li>
+                        <input type="checkbox">
+                        <span class="title">北京北京</span>
+                        <span class="singer">梁博、黄勇</span>
+                    </li>
+                    <li>
+                        <input type="checkbox">
+                        <span class="title">我爱你中国</span>
+                        <span class="singer">梁博</span>
+                    </li>
+                    <li>
+                        <input type="checkbox">
+                        <span class="title">花火</span>
+                        <span class="singer">梁博</span>
+                    </li>
+                    <li>
+                        <input type="checkbox">
+                        <span class="title">回来</span>
+                        <span class="singer">梁博</span>
+                    </li>
+                    <li>
+                        <input type="checkbox">
+                        <span class="title">爱要有你才完美</span>
+                        <span class="singer">梁博、那英</span>
+                    </li>
+                </ul>
+                <ul id="tab">
+                    <li>
+                        <input type="checkbox">全选
+                    </li>
+                    <li>
+                        <div class="button" id="favorite">收藏</div>
+                    </li>
+                    <li>
+                        <div class="button" id="add">添加</div>
+                    </li>
+                    <li>
+                        <div class="button" id="delete">删除</div>
+                    </li>
+                </ul>
+            </div>
+</body>
+</html>

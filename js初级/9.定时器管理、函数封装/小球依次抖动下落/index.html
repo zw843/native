@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./tools.js"></script>
+    <script>
+        var str = '';
+        var n = 1;
+        var arr = ['img/wf1.jpg', 'img/wf2.jpg', 'img/wf3.jpg', 'img/wf4.jpg', 'img/wf5.jpg'];
+        // console.log(arr.length) 5
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 5; j++) {
+                str += '<img style="top:' + (60 + i *100) + 'px; left:' + (60 + j * 100) + 'px;" src="' + arr[n % arr
+                    .length] + '"/>';
+                n++;
+            }
+        }
+        document.body.innerHTML = str;
+        var imgs = document.getElementsByTagName("img");
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].index = i;
+            imgs[i].onclick = function () {
+                var arr = getArr(this.index);
+                var num = n = 0;
+
+                var timer = setInterval(function () {
+                    // doMove( aImg[ arr[num] ], 'top', 22, target);
+                    shake(imgs[arr[num]], 'left', function () {
+                        // alert( num );		// 注意，当第一个抖完以后，num这个数字已经不再是第0个了！！！
+                        var target = parseInt(getStyle(imgs[arr[n]], 'top')) + 100;
+                        doMove(imgs[arr[n]], 'top', 20, target);
+                        n++;
+                    });
+                    num++;
+                    if (num == arr.length) {
+                        clearInterval(timer);
+                    }
+                }, 100)
+            };
+        }
+     
+
+        function getArr(index) {
+            var arr = [index];
+            var len = Math.max(index, imgs.length - 1 - index);
+            var a = b = index;
+            for (var i = 0; i < len; i++) {
+                if (a > 0) {
+                    arr.push(--a);
+                }
+                if (b < imgs.length - 1) {
+                    arr.push(++b);
+                }
+            }
+            return arr;
+        }
+    </script>
+</body>
+
+</html>

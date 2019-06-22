@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+			border: none;
+			margin: 0;
+			padding: 0;
+		}
+        #main {
+			width: 600px;
+			height: 399px;
+			margin: 50px auto;
+			
+			border: 5px solid tan;
+			font-size: 0;
+			position: relative;
+			overflow: hidden;
+		}
+        #box {
+			width: 3600px;
+			position: absolute;
+			left: 0;
+		}
+        h1 {
+			margin: 0;
+			padding: 0;
+			font-size: 24px;
+			line-height:36px;
+			padding: 5px;
+		}
+        p {
+			margin: 0;
+			padding: 5px;
+			line-height: 20px;
+			padding-bottom: 10px;
+		}
+        #info {
+			font-size: 14px;
+			position: absolute;
+			width: 600px;
+			top: 399px;
+			left: 0;
+		}
+        #info div {
+			position: absolute;
+			top: 0px;
+			left: 0;
+			width: 600px;
+			background: #000;
+			opacity: 0.6;
+			color: #fff;
+		}
+    </style>
+    <script>
+        function getStyle(obj,attr){
+            return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+        }
+        function move(obj,attr,step,count,target,endFn){
+            clearInterval(obj.timer);
+            step = parseInt(getStyle(obj,attr)) < target ? step : -step;
+
+            obj.timer = setInterval(function(){
+                var replace = parseInt(getStyle(obj,attr)) + step;//位移
+                if(step > 0 && replace > target || step < 0 && replace < target){
+                    replace = target;
+                }
+                obj.style[attr] = replace + 'px';
+                if(replace == target){
+                    clearInterval(obj.timer)
+                    endFn && endFn();
+                }
+            },count);
+        }
+        window.onload = function(){
+            var box = document.getElementById("box"),
+                imgs = box.getElementsByTagName("img"),
+                num = 0,
+                timer = null,
+                info = document.getElementById("info"),
+                div = info.getElementsByTagName("div");
+
+                move(div[0],'top',20,50,-100,function(){
+                    setTimeout(function(){
+                        move(div[num],'top',20,50,0);
+                    },1500)
+                });
+                timer = setInterval(function(){
+                    var target = -600 * (num + 1);
+                    move(box,'left',20,20,target,function(){
+                        move(div[num],'top',20,50,-100,function(){
+                            setTimeout(function(){
+                                move(div[num],'top',20,50,0);
+                                if(num == imgs.length -1){
+                                    box.style.left = 0;
+                                    num = 0;
+                                }
+                            },1500)
+                        })
+                    })
+                    num++;
+                },3000);
+        }
+     
+    </script>
+</head>
+<body>
+    <div id="main">
+		<div id="box">
+			<img src="./img/pic1.jpg" alt="">
+			<img src="./img/pic2.jpg" alt="">
+			<img src="./img/pic3.jpg" alt="">
+			<img src="./img/pic4.jpg" alt="">
+			<img src="./img/pic5.jpg" alt="">
+			<img src="./img/pic1.jpg" alt="">
+		</div>
+		<div id="info">
+			<div>
+				<h1>离婚律师：第1集</h1>
+				<p>1：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第2集</h1>
+				<p>2：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第3集</h1>
+				<p>3：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第4集</h1>
+				<p>4：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第5集</h1>
+				<p>5：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+			<div>
+				<h1>离婚律师：第1集</h1>
+				<p>1：擅长离婚诉讼、一向在法庭上慷慨激昂口若悬河的著名律师池海东（吴秀波 饰）算阴沟里翻船了，老婆公然给他戴了绿帽子，更倒霉的是作为受害者的他竟然输掉了和老婆的离婚官司。</p>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        #box {
+            width: 280px;
+            height: 180px;
+            border: 1px solid #333;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        #box a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            background: tan;
+            position: absolute;
+            top: 74px;
+            z-index: 5;
+        }
+
+        #box .left {
+            left: -60px;
+        }
+
+        #box .right {
+            right: -60px;
+        }
+
+        #box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: 1s;
+        }
+
+        #text {
+            width: 300px;
+            height: 100px;
+            border: 10px solid turquoise;
+            background: khaki;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -60px 0 0 -160px;
+            z-index: 3;
+            text-align: center;
+            display: none;
+        }
+
+        #bg {
+            width: 100%;
+            height: 100%;
+            background: azure;
+            opacity: 0.4;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <a href="javascript:;" class="left"></a>
+        <a href="javascript:;" class="right"></a>
+        <img src="./img/001.jpg" width="280" height="180" />
+        <img src="./img/002.jpg" width="280" height="180" />
+        <img src="./img/003.jpg" width="280" height="180" />
+        <img src="./img/004.jpg" width="280" height="180" />
+    </div>
+
+    <div id="text">
+        <p>再来一次？</p>
+        <input type="button" value="重来" />
+    </div>
+    <div id="bg"></div>
+    <script>
+        var box = document.getElementById("box");
+        var as = box.getElementsByTagName("a");
+        var imgs = box.getElementsByTagName("img");
+
+        var bg = document.getElementById("bg");
+        var text = document.getElementById("text");
+        var btn = text.getElementsByTagName("input")[0];
+
+        var flag = 1;
+        var now = 0;
+        for(var i = 0; i < imgs.length; i++){
+            imgs[i].style.zIndex = imgs.length -i;
+        }
+    
+        as[0].onclick = function(){
+            flag = -1;
+            move();
+        };
+        as[1].onclick = function(){
+            flag = 1;
+            move();
+        };
+        btn.onclick = function(){
+            bg.style.display = text.style.display = 'none';
+            for(var i = 0; i < imgs.length;i++){
+                imgs[i].style.left = 0;
+                imgs[i].style.opacity = 1;
+            }
+            now = 0;
+        };
+        function move(){
+            if(now < imgs.length - 1){
+                imgs[now].style.left = flag * 280 + 'px';
+                imgs[now].style.opacity = 0;
+                now++;
+            }
+            else{
+                reset();
+            }
+        }
+        function reset(){
+            bg.style.display = text.style.display = 'block'
+        }
+
+
+     
+        // var sgin = 1;
+        // var iNow = 0;
+
+        // for (var i = 0; i < imgs.length; i++) {
+        //     imgs[i].style.zIndex = imgs.length - i;
+        // }
+
+        // as[0].onclick = function () {
+        //     sgin = -1;
+        //     doMove();
+        // };
+        // as[1].onclick = function () {
+        //     sgin = 1;
+        //     doMove();
+        // };
+        // btn.onclick = function () {
+        //    bg.style.display = text.style.display = 'none';
+        //     for (var i = 0; i < imgs.length; i++) {
+        //         imgs[i].style.left = 0;
+        //         imgs[i].style.opacity = 1;
+        //     }
+
+        //     iNow = 0;
+        // };
+
+        // function doMove() {
+
+        //     if (iNow < imgs.length - 1) {
+        //         imgs[iNow].style.left = sgin * 280 + 'px';
+        //         imgs[iNow].style.opacity = 0;
+
+        //         iNow++;
+        //     } else {
+        //         fnReset();
+        //     }
+        // }
+
+        // function fnReset() {
+        //    bg.style.display = text.style.display = 'block';
+        // }
+    </script>
+</body>
+
+</html>

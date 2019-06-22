@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 500px;
+            height: 50px;
+            border: 1px solid #333;
+            position: relative;
+            margin:200px auto 0;
+        }
+
+        #box span {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 30px;
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            opacity: 1;
+            /* 一定得添加 */
+        }
+
+        #box p {
+            margin: 0;
+            width: 500px;
+            width: 0;
+            height: 50px;
+            z-index: 1;
+            background: #60F;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+        <span>+1</span>
+
+        <p></p>
+    </div>
+    <script src="./tools.js"></script>
+    <script>
+        var box = document.getElementById("box");
+        var spans = document.getElementsByTagName("span");
+        var p = box.getElementsByTagName("p")[0];
+        var flag = true;
+        for (var i = 0; i < spans.length; i++) {
+            spans[i].style.left = i * 50 + 'px';
+        }
+        box.onclick = function () {
+            if (!flag) return;
+            flag = false;
+
+            var now = num = n = 0;
+            var timer = setInterval(function () {
+                doMove(spans[now], 'top', 10, -300, function () {
+                    num++;
+                    if (num == spans.length) {
+                        // alert('最后一个top结束')
+                        endFn('top');
+                    }
+                });
+                opacity(spans[now], 2, 0, function () {
+                    n++;
+                    if (n == spans.length) {
+                        //alert('最后一个opacity结束了')
+                        endFn('opacity');
+                    }
+                });
+                // 如何找到最后一个运动结束？
+                // 到底是哪个一运动结束的呢？
+                now++;
+                if (now == spans.length) {
+                    clearInterval(timer);
+                }
+            }, 80);
+            doMove(p, 'width', 10, 500);
+            opacity(p, 3, 100, function () {
+                opacity(p, 3, 0, function () {
+                    p.style.width = 0;
+                    //alert(1);
+                });
+            });
+        };
+        var arr = [];
+
+        function endFn(attr) {
+            arr.push(attr);
+            //alert(arr.length);
+            var now = 0;
+            if (arr.length % 2 == 0) {
+                //if(arr.length == 2){
+                for (var i = 0; i < spans.length; i++) {
+                    spans[i].style.top = 0;
+                    opacity(spans[i], 3, 100, function () {
+                        now++;
+                        if (now == spans.length) {
+                            flag = true;
+                        }
+                    });
+                }
+                // alert(2);
+                // arr.length = 0;		清空数组
+                // onOff = true;
+            }
+        }
+    </script>
+</body>
+
+</html>

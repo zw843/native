@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    #div2{
+        margin: 100px auto;
+        font-size: 0;
+        text-align: center;
+    }
+    #div2 img{
+        width: 100px;
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+    <script src="./tools.js"></script>
+    <script>
+        window.onload = function(){
+            var div1 = document.getElementById("div1"),
+                div2 = document.getElementById("div2"),
+                imgs = div2.getElementsByTagName("img"),
+                arrImg = ['img/0.jpg','img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/5.jpg','img/6.jpg','img/7.jpg','img/8.jpg','img/9.jpg','img/colon.jpg'];
+                function time(){
+                    var nowTime = new Date(),
+                        nowYear = nowTime.getFullYear(),
+                        nowMonth = nowTime.getMonth() + 1,//1月份是从0开始算的
+                        nowDate = nowTime.getDate(),
+                        nowDay = nowTime.getDay(),
+                        nowHours = nowTime.getHours(),
+                        nowMinutes = nowTime.getMinutes(),
+                        nowSeconds = nowTime.getSeconds(),
+                        str = '',
+                        str2 = '';
+
+                        if(nowDay == 0 ) nowDay = '礼拜天';
+                        if(nowDay == 1 ) nowDay = '礼拜一';
+                        if(nowDay == 2 ) nowDay = '礼拜二';
+                        if(nowDay == 3 ) nowDay = '礼拜三';
+                        if(nowDay == 4 ) nowDay = '礼拜四';
+                        if(nowDay == 5 ) nowDay = '礼拜五';
+                        if(nowDay == 6 ) nowDay = '礼拜六';
+
+                        str = nowYear + '年' + nowMonth + '月' + nowDate + '日' + nowDay + '' + two(nowHours) + ':' + two(nowMinutes) + ':' + two(nowSeconds);
+                        str2 = two(nowHours) + two(nowMinutes) + two(nowSeconds);
+                        //文字时间
+                        div1.innerHTML = str;
+                        //没有动画效果的图片时间 charAt 返回指定位置的字符
+                        imgs[0].src = arrImg[str2.charAt(0)];
+                        imgs[1].src = arrImg[str2.charAt(1)];
+                    
+                        imgs[3].src = arrImg[str2.charAt(2)];
+                        imgs[4].src = arrImg[str2.charAt(3)];
+                    
+                        imgs[6].src = arrImg[str2.charAt(4)];
+                        imgs[7].src = arrImg[str2.charAt(5)];
+                }
+                function two(n){
+                    return n < 10 ? '0' + n : '' + n;
+                }
+                time();
+                setInterval(time,1000)
+        }
+    </script>
+</head>
+<body>
+    <div id="div1"></div>
+    <div id="div2">
+        <img src="./img/0.jpg" alt="">
+        <img src="./img/0.jpg" alt="">
+        <img src="./img/colon.jpg" alt="">
+        <img src="./img/0.jpg" alt="">
+        <img src="./img/0.jpg" alt="">
+        <img src="./img/colon.jpg" alt="">
+        <img src="./img/0.jpg" alt="">
+        <img src="./img/0.jpg" alt="">
+    </div>
+</body>
+</html>

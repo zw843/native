@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html, body, p, h2, h3, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+		a {
+			text-decoration: none;
+			color: #aa5d5d;
+		}
+        h2 {
+			width: 170px;
+			background: tan;
+			color: rgb(178, 230, 111);
+			font-size: 14px;
+			padding: 5px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+			margin: 20px auto 0 auto;
+		}
+        h2 a {
+			float: right;
+		}
+        #content {
+			width: 160px;
+			height: 450px;
+			background: white;
+			overflow: hidden;
+			padding: 20px 10px;
+			margin: 0 auto;
+			border-left: 1px solid #eee;
+			border-right: 1px solid #eee;
+			border-bottom: 1px solid #eee;
+			position: relative;
+		}
+        #content h3 {
+			font-size: 14px;
+			line-height: 28px;
+		}
+        #content ul{
+			position: relative;
+			top: 0;
+		}
+        #content li {
+			border-bottom: 1px solid #3f45;
+			position: relative;
+			padding-bottom: 5px;
+		}
+        #content img {
+			max-width: 80px;
+			max-height: 60px;
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+        #content p {
+			font-size: 12px;
+			width: 80px;
+		}
+        #content .time {
+			padding-top: 10px;
+			color: firebrick;
+		}
+        #up, #down {
+			width: 100%;
+			height: 20px;
+			position: absolute;
+			left: 0;
+			cursor: pointer;
+			z-index: 1;
+		}
+        #up {
+			top: 0;
+			background: url('./img/up.png') no-repeat center center rgb(114, 211, 214);
+		}
+        #down {
+			bottom: 0;
+			background: url('./img/down.png') no-repeat center center cornflowerblue;
+		}
+    </style>
+    <script>
+        window.onload = function(){
+            var up = document.getElementById("up"),
+                down = document.getElementById("down"),
+                ul = document.getElementsByTagName("ul")[0],
+                timerUp = null,
+                timerDown = null;
+        //设置向上向下按钮hover时的样式
+        up.onmouseover = down.onmouseover = function(){
+            this.style.backgroundColor = 'cornflowerblu'
+        }
+       up.onmouseout = down.onmouseout  = function(){
+				this.style.backgroundColor = 'cornflowerblu';
+			}
+           //jquery中用attr()方法来获取和设置元素属性,attr是attribute（属性）的缩写
+           //   getComputedStyle 方法可用来获取元素中所有可用的css属性列表
+           //  IE678 中则用 currentStyle 代替 。
+            function getStyle(obj,attr){
+                return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+            }
+            //设置向上按钮按下动作
+            up.onmousedown = function(){
+                timerUp = setInterval(function(){
+                    if(parseInt(getStyle(ul,'top')) > -180){
+                        ul.style.top = parseInt(getStyle(ul,'top')) - 10 + 'px';
+                    }else{
+                        ul.style.top = '-180px'
+                    }
+                },100);
+            }
+            //设置向上按钮抬起动作
+            up.onmouseup = function(){
+                clearInterval(timerUp);
+            }
+            //设置向下按钮按下的动作
+            down.onmousedown = function(){
+                timerDown = setInterval(function(){
+                    if(parseInt(getStyle(ul,'top')) < 0){
+                        ul.style.top  = parseInt(getStyle(ul,'top')) + 10 + 'px';
+                    }else{
+                        ul.style.top = '0px';
+                        //clearInterval(timerDown)
+                    }
+                },100);
+            }
+            //设置向下按钮抬起动作
+            down.onmouseup = function(){
+                clearInterval(timerDown);
+            }
+        }
+  
+    </script>
+</head>
+<body>
+        <h2>基础练习<a href="#">>>更多</a></h2>
+        <div id="content">
+            <div id="up"></div>
+            <ul>
+                <li>
+                    <h3>标题一</h3>
+                    <p>Mac翻新产品<br/>iPod翻新产品</p>
+                    <p class="time">12:35</p>
+                    <img src="./img/ad1.png" alt="">
+                </li>
+                <li>
+                    <h3>标题二</h3>
+                    <p>RMB5,780起<br/>最低降了30%</p>
+                    <p class="time">21:29</p>
+                    <img src="./img/ad2.png" alt="">
+                </li>
+                <li>
+                    <h3>标题三</h3>
+                    <p>Mac完全解析</p>
+                    <p class="time">22:38</p>
+                    <img src="./img/ad3.png" alt="">
+                </li>
+                <li>
+                    <h3>标题四</h3>
+                    <p>无线网络基础</p>
+                    <p class="time">12:00</p>
+                    <img src="./img/ad4.png" alt="">
+                </li>
+                <li>
+                    <h3>标题五</h3>
+                    <p>从PC到Mac：<br/>基础知识</p>
+                    <p class="time">23:12</p>
+                    <img src="./img/ad5.png" alt="">
+                </li>
+                <li>
+                    <h3>标题六</h3>
+                    <p>转移到Mac</p>
+                    <p class="time">15:30</p>
+                    <img src="./img/ad6.png" alt="">
+                </li>
+                <li>
+                    <h3>标题七</h3>
+                    <p>各种Mac机</p>
+                    <p class="time">3:23</p>
+                    <img src="./img/ad7.png" alt="">
+                </li>
+                <li>
+                    <h3>标题八</h3>
+                    <p>RMB348起<br/>最多降低了43%</p>
+                    <p class="time">15:48</p>
+                    <img src="./img/ad8.png" alt="">
+                </li>
+            </ul>
+            <div id="down"></div>
+        </div>
+</body>
+</html>

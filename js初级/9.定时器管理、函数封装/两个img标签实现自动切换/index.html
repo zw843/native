@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background: #0c0101de;
+        }
+
+        #box {
+            width: 400px;
+            height: 300px;
+            border: 10px solid #fff;
+            position: relative;
+            top: 100px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.1);
+        }
+
+        #box .img {
+            width: 800px;
+            height: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #box img {
+            width: 400px;
+            height: 300px;
+            float: left;
+        }
+
+        #box a {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.2);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            position: absolute;
+            top: 125px;
+            text-decoration: none;
+            z-index: 2;
+            border-radius: 50%;
+            font-size: 30px;
+            transition: 0.3s;
+        }
+
+        #box .left {
+            left: 10px;
+            /* margin-top: -12% */
+        }
+
+        #box .right {
+            right: 10px;
+            /* margin-top: -12% */
+        }
+
+        #box a:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: scale(1.3);
+        }
+
+        #box ul {
+            position: absolute;
+            bottom: 10px;
+            left: 150px;
+            z-index: 3;
+            padding: 0;
+            margin: 0;
+        }
+
+        #box li {
+            width: 20px;
+            height: 20px;
+            background: tan;
+            float: left;
+            border-radius: 50%;
+            margin-right: 8px;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        #box .active {
+            background: skyblue;
+        }
+     
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <a class="left" href="javascript:;">
+            <</a> <a class="right" href="javascript:;">>
+        </a>
+        <ul>
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="img">
+            <img src="./img/01.jpg" />
+            <img src="./img/02.jpg" />
+        </div>
+    </div>
+    <script src="./tools.js"></script>
+    <script>
+        var box = document.getElementById("box");
+        var as = box.getElementsByTagName("a");
+        var divImg = box.getElementsByTagName("div")[0];
+        var lis = box.getElementsByTagName("li");
+        var imgs = divImg.getElementsByTagName("img");
+        var arr = ['img/wf1.jpg','img/wf2.jpg','img/wf3.jpg','img/wf4.jpg'];
+        var now = num = 0;
+        var flag = true;
+        as[0].onclick = function(){
+            if(!flag) {return};
+            flag = false;
+            now--;
+            if(now == -1){
+                now = arr.length - 1;
+            }
+            //slide滑动
+            fnSlide(-1);
+        };
+        as[1].onclick = function(){
+            if(!flag){return}
+            flag = false;
+            now++;
+            if(now == arr.length){
+                now = 0;
+            }
+            fnSlide(1);
+        }
+        for(var i = 0; i < lis.length; i++){
+            lis[i].index = i;
+            lis[i].onclick = function(){
+                if(!flag || this.index == now){
+                    return;
+                }
+                flag = false;
+                if(this.index > num ){
+                    now = this.index;
+                    fnSlide(-1);
+                }
+            }
+        }
+        function fnSlide(n){
+            for(var i = 0; i < lis.length;i++){
+                lis[i].className = '';
+            }
+            lis[now].className = 'active';
+
+            if( n < 0){
+                //点击左
+                imgs[0].src = arr[now];
+                imgs[1].src = arr[num];
+                divImg.style.left = '-400px';
+                doMove(divImg,'left',50,0,function(){flag = true});
+            }
+            if( n > 0){
+                //点击右
+                imgs[0].src = arr[num];
+                imgs[1].src = arr[now];
+                divImg.style.left = 0;
+                doMove(divImg,'left',50,-400,function(){flag = true})
+            }
+            num = now;
+        }
+     
+    </script>
+</body>
+
+</html>
