@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body { background:#f1f1f1; font-family:微软雅黑; font-size:16px; user-select: none; }
+#box { width:800px; height:450px; border:1px solid #066; background:#FFF; margin:20px auto 0; position:relative; top:0; left:0; }
+#score { width:130px; border:1px solid #066; position:relative; top:-1px; left:-152px; background:#FFC; padding:10px; }
+#score p { margin:0; font-family:微软雅黑; font-size:16px; line-height:30px; }
+#alert { text-align:center; }
+    </style>
+    <script src="./tools.js"></script>
+    <script>
+        window.onload = function(){
+            var box = document.getElementById("box");
+            var qq = document.getElementById("qq");
+            var scores = document.getElementById("score");
+            var ps = scores.getElementsByTagName("p");
+            var alert = document.getElementById("alert");
+            var btn = alert.getElementsByTagName("input")[0];
+            var num = 1;
+            var score = 0;
+            var losePoints = 0;
+            var width = parseInt(getStyle(box,'width'));
+            var height = parseInt(getStyle(box,'height'));
+            var arrQQ = ['img/1.png','img/2.png','img/3.png','img/4.png','img/5.png','img/6.png','img/7.png','img/8.png','img/9.png','img/10.png','img/11.png'];
+            btn.onclick = createImg;
+            function createImg(){
+                btn.disabled = true;
+                btn.value = '游戏进行中...';
+                var x = Math.round(Math.random() * (width - 24));
+                var n = Math.floor(Math.random() * arrQQ.length);
+                var imgs = document.getElementsByTagName("img");
+                //' + x + '
+                //' + arrQQ[n] + '
+                qq.innerHTML = '<img style=" filter:alpha(opacity:100); opacity:1;position:absolute;top:0px;left:' + x + 'px;" src="' + arrQQ[n] + '" />';
+                doMove(imgs[0],'top',num,height - 24,
+                function(){
+                    ps[1].innerHTML = '失分:' + (++losePoints) + '分';
+                    if(losePoints < 10){
+                        shake(box,'top');
+                        createImg();
+                    }else{
+                        qq.innerHTML = '';
+                        alert('游戏结束');
+                        num = 1;
+                        score = 0;
+                        losePoints = 0;
+                        ps[1].innerHTML = '失分: 0 分';
+                        ps[0].innerHTML = '得分: 0 分';
+                        btn.disabled = false;
+                        btn.value = '开始游戏';
+                    }
+                });
+                imgs[0].onmousedown = function(){
+                    var that = this;
+                    that.src= 'img/qq.png';
+                    clearInterval(that.timer);
+                    ps[0].innerHTML = '得分:' + (++score) + '分';
+                    shake(that,'left',function(){
+                        num++;
+                        createImg();
+                    })
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="alert">
+        <h2>你的鼠标有多快？</h2>
+      <p>游戏说明：点击“开始游戏”，随机掉下QQ表情，点中它，千万别让它掉下去！！</p>
+      <input type="button" value="开始游戏" />
+    </div>
+    
+    <div id="box">
+        <div id="score">
+          <p>得分：0 分</p>
+          <p>失分：0 分</p>
+      </div>
+      <div id="qq"></div>
+    </div>
+    
+</body>
+</html>

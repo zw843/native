@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body { background:#f1f1f1; font-family:微软雅黑; font-size:16px; user-select: none; }
+#box { width:800px; height:450px; border:1px solid #066; background:#FFF; margin:20px auto 0; position:relative; top:0; left:0; }
+#score { width:130px; border:1px solid #066; position:relative; top:-1px; left:-152px; background:#FFC; padding:10px; }
+#score p { margin:0; font-family:微软雅黑; font-size:16px; line-height:30px; }
+#alert { text-align:center; }
+#qq {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 800px;
+	height: 450px;
+}
+    </style>
+    <script src="./tools.js"></script>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementById("alert").getElementsByTagName("input")[0],
+                score = document.getElementById("score").getElementsByTagName("p"),
+                score1 = score2 = 0,
+                box = document.getElementById("box"),
+                qq = document.getElementById("qq"),
+                arr = ['img/1.png','img/2.png','img/3.png','img/4.png','img/5.png','img/6.png','img/7.png','img/8.png','img/9.png','img/10.png','img/11.png'],
+                dropSpeed = 1;//下降速度
+                btn.onclick = function(){
+                    this.value = '游戏进行中...';
+                    this.style.color = '#000';
+                    this.style.background = 'orange';
+                    this.style.opacity = '0.4';
+                    //disabled 属性规定应该禁用 input 元素
+                    this.disabled = 'disabled';
+
+                    fnQQ();
+                    function fnQQ(){
+                        qqCreate();
+                        qqDrop(fnQQ);
+                    }
+                    function testScore(){
+                        if(score1 == 25){
+                            alert("恭喜通关");
+                            init();
+                            return true;
+                        }
+                        if(score2 == 5){
+                            alert("游戏结束");
+                            init();
+                            return true;
+                        }
+                    }
+                    function init(){
+                        btn.value = '开始游戏';
+                        btn.value.color = 'skyblue';
+                        btn.style.opacity = '1';
+                        qq.innerHTML = '';
+                        score[0].innerHTML = '得分: 0 分';
+                        score[1].innerHTML = '失分: 0分';
+                        sropSpeed = 1;
+                        score1 = score2 = 0;
+                    }
+                    function qqCreate(){
+                           qq.innerHTML = '<img style="position:absolute;top:0;left:' + Math.round(Math.random() * 776) + 'px" src=" '+ arr[Math.round(Math.random() * (arr.length -1 ))] + ' "/>';
+                    }
+                    function qqDrop(endFn){
+                        var icon = qq.getElementsByTagName("img")[0];
+                        dropSpeed += 0.8;
+                        doMove(icon,'top',dropSpeed,500,function(){
+                            qq.innerHTML = '';
+                            score2++;
+                            score[1].innerHTML = '失分:' + score2 + '分';
+                            shake(box,'top',function(){
+                                if(testScore()){
+                                    return;
+                                }
+                                endFn && endFn();
+                            });
+                        });
+                        icon.onmouseover = function(){
+                            clearInterval(icon.timer);
+                            icon.src = 'img/qq.png';
+                            shake(icon,'left',function(){
+                                qq.innerHTML = '';
+                                score1++;
+                                score[0].innerHTML = '得分:' + score1 + '分';
+                                if(testScore()){
+                                    return;
+                                }
+                                endFn && endFn();
+                            })
+                        }
+                    }
+                }
+        }
+    </script>
+</head>
+<body>
+        <div id="alert">
+                <h2>你的鼠标有多快？</h2>
+              <p>游戏说明：点击“开始游戏”，随机掉下QQ表情，把鼠标划上去，千万别让它掉下去！！<br/>划掉25个算你赢；掉下5个算你输 :)</p>
+              <input type="button" value="开始游戏" />
+            </div>
+            
+            <div id="box">
+                <div id="score">
+                  <p>得分：0 分</p>
+                  <p>失分：0 分</p>
+              </div>
+              <div id="qq"></div>
+            </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	html, body, ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+		}
+        ul {
+			width: 300px;
+			margin: 50px auto;
+		}
+        li {
+			display: inline-block;
+			width: 100px;
+			height: 50px;
+			font-size: 0;
+			overflow: hidden;
+			position: relative;
+         
+		}
+        div {
+			position: absolute;
+			top: 0px;
+			left: 0;
+		}
+    </style>
+    <script src="./tools.js"></script>
+    <script>
+        window.onload = function(){
+            var lis = document.getElementsByTagName("li"),
+                flag = 0;
+                for(var i = 0; i < lis.length; i++){
+                    roll(lis[i]);
+                }
+                function roll(li){
+                    var div = li.getElementsByTagName("div")[0];
+                    function rollOnce(){
+                        setTimeout(function(){
+                            flag = flag == 0 ? -50 : 0;
+                            doMove(div,'top',10,flag,rollOnce);
+                        },Math.round(Math.random() * 2000 + 1000));
+                    }
+                    rollOnce();
+                }
+        }
+    </script>
+</head>
+<body>
+    <ul>
+		<li>
+			<div><img src="./img/1.jpg"><img src="./img/2.jpg"></div>
+		</li>
+		<li>
+			<div><img src="./img/3.jpg"><img src="./img/4.jpg"></div>
+		</li>
+		<li>
+			<div><img src="./img/5.jpg"><img src="./img/6.jpg"></div>
+		</li>
+		<li>
+			<div><img src="./img/7.jpg"><img src="./img/8.jpg"></div>
+		</li>
+		<li>
+			<div><img src="./img/9.jpg"><img src="./img/10.jpg"></div>
+		</li>
+		<li>
+			<div><img src="./img/11.jpg"><img src="./img/12.jpg"></div>
+		</li>
+		<li>
+			<div><img src="./img/13.jpg"><img src="./img/14.jpg"></div>
+		</li>
+		<li>
+			<div><img src="./img/15.jpg"><img src="./img/16.jpg"></div>
+		</li>
+	</ul>
+</body>
+</html>

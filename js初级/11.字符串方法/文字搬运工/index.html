@@ -5,14 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        	html, body {
+			margin: 0;
+			padding: 0;
+			background: #C0C0C0;
+		}
+		#box {
+			margin: 50px auto;
+			width: 800px;
+			background: #fff;
+			overflow: hidden;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		textarea {
+			background: tan;
+			border: none;
+			width: 320px;
+			height: 220px;
+			float: left;
+			padding: 10px;
+			font-size: 18px;
+		}
+		#right {
+			width: 320px;
+			height: 220px;
+			background: #63EFF7;
+			float: right;
+			padding: 10px;
+		}
+		#center {
+			float: left;
+			width: 120px;
+			text-align: center;
+		}
+		#center a {
+			display: block;
+			color: #fff;
+			background: #F76300;
+			text-decoration: none;
+			padding: 10px;
+			margin: 0 5px;
+			font-family: '微软雅黑';
+		}
+		#center p {
+			font-size: 20px;
+			font-family: '微软雅黑';
+		}
+		#center ul {
+			margin: 0;
+			padding: 0;
+			font-size: 0;
+			opacity: 0;
+		}
+		li {
+			list-style: none;
+			display: inline-block;
+			width: 8px;
+			height: 10px;
+			background: #E7A521;
+			margin: 2px;
+		}
+    </style>
+    <script src="./tools.js"></script>
+    <script>
+        window.onload = function(){
+            var btn = document.getElementsByTagName("a")[0],
+                left = document.getElementById("left"),
+                right = document.getElementById("right"),
+                p = document.getElementsByTagName("p")[0],
+                now = document.getElementById("now"),
+                all = document.getElementById("all"),
+                transition = document.getElementById("transition"),
+                timer = null;
+                btn.onclick = function(){
+                    if(left.value == ''){
+                        alert('请输入内容,并点击按钮');
+                        return;
+                    }
+                    var str = left.value;
+                    //split 用于把一个字符串分割成字符串数组 ''表示每个字符之间都会被分割
+                        arr = str.split(''),
+                        m = n = 0,
+                        lis = transition.getElementsByTagName("li");
+                        all.innerHTML = arr.length;
+                        now.innerHTML = 0;
+                        this.style.opacity = 0.5;
+                        right.innerHTML = '';
+                        opacity(transition,10,100);
+                        timer = setInterval(function(){
+                            var lf = left.value;
+                            //substring(start,stop)用于提取字符串中介于两个指定下标之间的字符 当stop和start相等时，返回为空，如果start>stop，则改方法会在提取子串之前先交换这两个参数
+                            left.value = lf.substring(1);
+                            //不使用m的话  会默认带上逗号
+                            right.innerHTML += arr[m];
+                            m++;
+                            now.innerHTML = m;
+                            for(var i = 0; i < lis.length; i++){
+                                lis[i].style.background = 'orange';
+                            }
+                            lis[n].style.background = 'red';
+                            n++;
+                            if( n == lis.length){
+                                n = 0;
+                            }
+                            if(m == arr.length){
+                                clearInterval(timer);
+                                btn.style.opacity = 1;
+                                opacity(transition,20,0);
+                            }
+                        },120);
+
+                }
+        }
+    </script>
 </head>
 <body>
-        <div id="wrapper">
+        <div id="box">
                 <textarea id="left"></textarea>
                 <div id="center">
                     <a href="javascript:">把文字右移</a>
-                    <p><span id="current">0</span>/<span id="all">0</span></p>
-                    <ul id="progress">
+                    <p><span id="now">0</span>/<span id="all">0</span></p>
+                    <ul id="transition">
                         <li></li>
                         <li></li>
                         <li></li>
