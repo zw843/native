@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+			margin: 0;
+			padding: 0;
+		}
+		p {
+			width: 600px;
+			position: fixed;
+			/* bottom: 5px; */
+		}
+		span[title]{
+			color: rgb(230, 215, 5);
+			position: relative;
+		}
+		span {
+			color: red;
+		}
+		span.title {
+			color: black;
+			position: absolute;
+			line-height: 26px;
+			padding: 0 5px;
+			background: #FFFFCA;
+			border: 1px solid #000;
+			z-index: 1;
+			white-space: nowrap;
+			top: 18px;
+			left: 0;
+			position: absolute;
+			display: none;
+		}
+    </style>
+    <script>
+        function getPos(obj){
+            var pos = { left:0,top:0}
+            while(obj){
+                pos.left += obj.offsetLeft;
+                pos.top += obj.offsetTop;
+                obj = obj.offsetPaent;
+            }
+            return pos;
+        }   
+    </script>
+    <script>
+        window.onload = function(){
+            var p = document.getElementsByTagName("p")[0],
+                spans = document.getElementsByTagName("span"),
+                title = [];
+                //设置p的位置始终在页面正中
+                p.style.left = (document.documentElement.clientWidth -  p.offsetWidth) / 2 + 'px';
+                //onresize 事件会在窗口或框架被调整大小时发生
+                window.onresize = function(){
+                    p.style.left = (document.documentElement.clientWidth - p.offsetWidth) / 2 + 'px';
+                }
+                //批量生成title提示框
+                for(var i = 0; i < spans.length; i++){
+                    if(spans[i].getAttribute("title")){
+                        var tips = document.createElement("span");
+                        tips.className = 'title';
+                        tips.innerHTML = spans[i].title;
+                        spans[i].appendChild(tips);
+
+                    //设置鼠标移入动作
+                    spans[i].onmouseover = function(){
+                        this.children[0].style.display = 'block';
+                        if(getPos(this.children[0]).top + 26 > document.body.scrollTop + document.documentElement.clientHeight){
+                            this.children[0].style.top = '-30px';
+                        }
+                    }
+                    //设置鼠标移出动作
+                    spans[i].onmouseout = function(){
+                        this.children[0].style.display = 'none';
+                    }
+                    }
+                }
+                //设置第一个javascript提示框中的'javascript'的特殊样式
+                var str = spans[0].children[0].innerHTML;
+                //split 把一个字符串分割成字符串数组
+                //join() 方法用于把数组中的所有元素放入一个字符串
+                spans[0].children[0].innerHTML = str.split('javascript').join('<span style="color:tan;font-weight:bold;">Javascript</span>');
+        }
+    </script>
+</head>
+
+<body>
+    <p>
+        <span title="JavaScript是一门很热门的语言">JavaScript</span>是面向Web的编程语言，绝大多数现代网站都使用了<span
+            title="JavaScript">JavaScript</span>，并且所有的现代<span
+            title="Web">Web</span>浏览器——基于<span>桌面系统</span>、游戏机、平板电脑和智能手机的浏览器——均包含了<span
+            title="JavaScript">JavaScript</span>解释器。这使得<span title="JavaScript">JavaScript</span>能够称得上史上最广泛的编程语言。<span
+            title="JavaScript">JavaScript</span>也是前端开发工程师必须掌握的三种技能之一，描述网页内容的<span title="HTML">HTML</span>、描述网页样式的<span
+            title="CSS">CSS</span>以及描述网页行为的<span title="JavaScript">JavaScript</span>。
+    </p>
+</body>
+
+</html>

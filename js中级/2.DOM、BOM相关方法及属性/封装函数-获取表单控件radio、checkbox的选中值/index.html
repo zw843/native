@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        	body {
+			margin: 0;
+			padding: 0;
+			font-family: '微软雅黑';
+		}
+		form {
+			border: 1px solid #eee;
+			border-radius: 10px;
+			width: 600px;
+			margin: 50px auto;
+			padding: 20px;
+			line-height: 28px;
+			position: relative;
+		}
+		form label {
+			display: block;
+			font-weight: bold;
+			padding: 10px 0;
+		}
+		form input {
+			margin-left: -3px;
+			margin-right: 5px;
+		}
+		#showbox1, #showbox2 {
+			border: 1px solid #eee;
+			width: 160px;
+			position: absolute;
+			right: 30px;
+			top: 30px;
+			background: tan;
+			padding: 20px;
+			display: none;
+		}
+		input[type="reset"]{
+			float: right;
+		}
+    </style>
+    <script>
+        window.onload = function(){
+            var form1 = document.getElementById("form1"),
+                form2 = document.getElementById("form2"),
+                showbox1 = document.getElementById("showbox1"),
+                showbox2 = document.getElementById("showbox2");
+                function getChecked(form,name){
+                    var arr = [];
+                    for(var i = 0; i < form[name].length;i++){
+                        if(form[name][i].checked){
+                            arr.push(form[name][i].value);
+                        }
+                    }
+                    if(form[name][0].type == 'radio'){
+                        return arr[0];
+                    }
+                    if(form[name][0].type == 'checkbox'){
+                        return arr;
+                    }
+                }
+                for(var i = 0; i < form1.income.length;i++){
+                    form1.income[i].onclick = function(){
+                        showbox1.style.display = 'block';
+                        showbox1.innerHTML = '你现在的收入是:'+ getChecked(form1,'income');
+                    }
+                }
+                for(var i = 0; i < form2.mettle.length;i++){
+                    form2.mettle[i].onclick = function(){
+                        showbox2.style.display = 'block';
+                        showbox2.innerHTML = '你的性格属于:' + getChecked(form2,'mettle').join(',');
+                    }
+                }
+                form1.onreset = function(){
+                    //onreset 事件会在表单中的重置按钮被点击时发生
+                    var res = confirm('确定重置?');
+                    if(res){
+                        showbox1.style.display = 'none';
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+                form2.onreset = function(){
+                    var res = confirm('确定重置?');
+                    if(res){
+                        showbox2.style.display = 'none';
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+        }
+    </script>
+</head>
+<body>
+        <form id="form1">
+                <label>您的月收入水平是：</label>
+                <input type="radio" name="income" value="1000元以下">1000元以下<br/>
+                <input type="radio" name="income" value="1000~3000元">1000~3000元<br/>
+                <input type="radio" name="income" value="3000~5000元">3000~5000元<br/>
+                <input type="radio" name="income" value="5000~10000元">5000~10000元<br/>
+                <input type="radio" name="income" value="10000~20000元">10000~20000元<br/>
+                <input type="radio" name="income" value="20000元以上">20000元以上
+                <div id="showbox1"></div>
+                <input type="reset" name="reset" value="重置">
+            </form>
+            <form id="form2">
+                <label>您的性格是：</label>
+                <input type="checkbox" name="mettle" value="开朗">开朗
+                <br>
+                <input type="checkbox" name="mettle" value="随性">随性
+                <br>
+                <input type="checkbox" name="mettle" value="阴郁">阴郁
+                <br>
+                <input type="checkbox" name="mettle" value="果断">果断
+                <br>
+                <input type="checkbox" name="mettle" value="冷静">冷静
+                <br>
+                <input type="checkbox" name="mettle" value="奔放">奔放
+                <br>
+                <input type="checkbox" name="mettle" value="内敛">内敛
+                <br>
+                <input type="checkbox" name="mettle" value="稳重">稳重
+                <div id="showbox2"></div>
+                <input type="reset" name="reset" value="重置">
+            </form>
+</body>
+</html>

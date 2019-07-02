@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var text = document.getElementById("text"),
+                btn = document.getElementById("btn"),
+                ul = document.getElementById("ul"),
+                del = document.getElementById("delete"),
+                flag = true;
+            btn.onclick = function () {
+                if (!text.value) {
+                    return;
+                }
+                var lis = document.createElement("li");
+                lis.innerHTML = text.value;
+                if (ul.children[0]) {
+                    ul.insertBefore(lis, ul.children[0]);
+                } else {
+                    ul.appendChild(lis);
+                }
+                text.value = '';
+                for (var i = 0; i < ul.children.length; i++) {
+                    ul.children[i].onclick = function () {
+                        if (flag) {
+                            this.mark = '1';
+                            this.style.background = 'tan';
+                            flag = !flag;
+                        } else {
+                            this.mark = '';
+                            this.style.background = '';
+                            flag = !flag;
+                        }
+                    }
+                };
+            }
+            del.onclick = function(){
+                for(var i = 0; i < ul.children.length; i++){
+                    if(ul.children[i].mark){
+                        ul.removeChild(ul.children[i]);
+                        i--;
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <input type="text" id='text' /><input type="button" value="留言" id="btn" /><input type="button" value="批量删除"
+        id="delete" />
+    <ul id="ul"></ul>
+</body>
+
+</html>

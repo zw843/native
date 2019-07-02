@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    body { margin: 0; padding: 0; }
+		#div1 { width: 100px; height: 100px; border: 1px solid #eee; background: tan; position: absolute;transition: all 0.5s ease}
+    </style>
+    <script>
+        window.onload = function(){
+            var div = document.getElementById("div1"),
+                key = { l:null,t:null,r:null,b:null};
+                setInterval(function(){
+                    if(key.l){
+                        div.style.left = div.offsetLeft - 30 + 'px';
+                    }
+                    if(key.t){
+                        div.style.top = div.offsetTop - 30 + 'px';
+                    }
+                    if(key.r){
+                        div.style.left = div.offsetLeft + 30 + 'px';
+                    }
+                    if(key.b){
+                        div.style.top = div.offsetTop + 30 + 'px';
+                    }
+                },50)
+                document.onkeydown = function(e){
+                    var e = e || event;
+                    switch(e.keyCode){
+                        case 37:
+                        key.l = true;
+                        break;
+                        case 38:
+                        key.t = true;
+                        break;
+                        case 39:
+                        key.r = true;
+                        break;
+                        case 40:
+                        key.b = true;
+                        break;
+                    }
+                }
+                document.onkeyup = function(e){
+                    var e = e || event;
+                    switch(e.keyCode){
+                        case 37:
+                        key.l = false;
+                        break;
+                        case 38:
+                        key.t = false;
+                        break;
+                        case 39:
+                        key.r = false;
+                        break;
+                        case 40:
+                        key.b = false;
+                        break;
+                    }
+                }
+
+        }
+    </script>
+</head>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

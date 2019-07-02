@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body { margin: 0; padding: 0; }
+		ul { padding: 0; margin: 0; }
+		li { list-style: none; }
+		a { text-decoration: none; color: #000; display: block; }
+		#div1 { width: 250px; height: 20px; border: 1px solid #fe6601; padding: 5px; line-height:20px; margin: 20px auto 0 auto;}
+		#ul1 { margin: 0 auto; width: 260px; line-height: 20px; border: 1px solid #fe6601; display: none;}
+		#ul1 li a { padding: 5px; }
+		#ul1 li a:hover { background: tan; color: #fff; }
+    </style>
+    <script>
+        window.onload = function(){
+            var div = document.getElementById("div1"),
+                ul = document.getElementById("ul1");
+                document.onclick = function(){
+                    ul.style.display = 'none';
+                }
+                div.onclick = function(e){
+                    var e = e || event;
+                    //事实上stoppropagation和cancelBubble的作用是一样的，都是用来阻止浏览器默认的事件冒泡行为。
+                    // e.stoppropagation = true;
+                    e.cancelBubble = true;
+                    ul.style.display = 'block';
+                }
+                for(var i = 0; i < ul.children.length;i++){
+                    ul.children[i].onclick = function(){
+                        for(var i = 0; i < ul.children.length;i++){
+                            ul.children[i].children[0].style.background = '';
+                            ul.children[i].children[0].style.color = '';
+                        }
+                        div.innerHTML = this.children[0].innerHTML;
+                        this.children[0].style.background = 'tan';
+                        this.children[0].style.color = 'orange';
+                    }
+                }
+        }
+    </script>
+</head>
+<body>
+    	<div id="div1"></div>
+	<ul id="ul1">
+		<li><a href="javascript:;">宋体</a></li>
+		<li><a href="javascript:;">黑体</a></li>
+		<li><a href="javascript:;">楷体</a></li>
+		<li><a href="javascript:;">微软雅黑</a></li>
+		<li><a href="javascript:;">新宋体</a></li>
+		<li><a href="javascript:;">仿宋</a></li>
+	</ul>
+</body>
+</html>

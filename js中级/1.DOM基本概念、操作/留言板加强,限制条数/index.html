@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul{
+            list-style: none;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var text = document.getElementById("text"),
+                btn = document.getElementById("btn"),
+                ul = document.getElementById("ul"),
+                n = 3;//设置保留条目数量
+             
+                btn.onclick = function(){
+                    if(!text.value){
+                        return;
+                    }
+                    var lis = document.createElement("li");
+                    lis.innerHTML = text.value;
+                    //如果超过保留数 在初始第一个前面追加
+                    if(ul.children[0]){
+                        //insertBefore() 方法可在已有的子节点前插入一个新的子节点
+                        ul.insertBefore(lis,ul.children[0]);
+                    }
+                      //如果未超过保留数 在后面追加
+                    else{
+                        ul.appendChild(lis);
+                    }
+                    //如果有保留数最后一个  则移除最后一个位置
+                    if(ul.children[n]){
+                        ul.removeChild(ul.children[n]);
+                    }
+                    //输入后 清空输入框
+                    text.value = '';
+                }
+             
+        }
+     
+    </script>
+</head>
+<body>
+    <input type="text" id='text' /><input type="button" value="留言" id="btn" />
+	<ul id="ul"></ul>
+</body>
+</html>

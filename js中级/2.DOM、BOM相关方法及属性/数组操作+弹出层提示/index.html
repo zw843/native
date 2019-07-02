@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            font-size: 14px;
+        }
+
+        body ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #container {
+            margin: 100px auto 0;
+            width: 1000px;
+        }
+
+        #header {
+            height: 35px;
+            border-bottom: 2px solid #EE7510;
+        }
+
+        #header li {
+            float: left;
+            padding: 0 10px;
+            margin-right: 5px;
+            height: 35px;
+            line-height: 35px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #header li.focus {
+            background-color: tan;
+            color: white;
+            font-weight: bold;
+        }
+
+        .list {
+            margin-top: 5px;
+        }
+
+        .list li {
+            position: relative;
+            height: 35px;
+            line-height: 35px;
+            font-size: 16px;
+        }
+
+        .list li a {
+            display: inline-block;
+            height: 35px;
+        }
+
+        .list .date {
+            position: absolute;
+            right: 0;
+            line-height: 35px;
+        }
+
+        #tips {
+            padding: 5px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 400px;
+            height: 200px;
+            display: none;
+            border: 2px solid #FF7700;
+            background-color: white;
+        }
+
+        #tips li.item {
+            width: 180px;
+            height: 30px;
+            float: left;
+            line-height: 30px;
+            border-bottom: 1px solid #CCC;
+        }
+
+        #arrow {
+            position: absolute;
+            left: -11px;
+            top: 120px;
+            width: 11px;
+            height: 17px;
+            background: url("img/arrow.png") no-repeat;
+        }
+    </style>
+    <script>
+        var data = [{
+                'name': '前端',
+                'list': [{
+                        'title': '前端工程师',
+                        'firm': '北京魔方国际旅行社有限公司', //firm 公司
+                        'position': '前端页面',
+                        'need': '2人',
+                        'location': '北京海淀',
+                        'experience': '不限',
+                        'education': '不限',
+                        'wage': '面议',
+                        'addDate': '2019-6-24'
+                    },
+                    {
+                        'title': '网站前端页面设计',
+                        'firm': '北京中联讯通网络科技有限公司 ',
+                        'position': '前端页面',
+                        'need': '5人',
+                        'location': '北京月坛',
+                        'experience': '不限',
+                        'education': '大专',
+                        'wage': '7000',
+                        'addDate': '2019-6-25'
+                    },
+                    {
+                        'title': '高级web前端工程师',
+                        'firm': '星职场教育培训公司 ',
+                        'position': '前端页面',
+                        'need': '12人',
+                        'location': '军博',
+                        'experience': '不限',
+                        'education': '不限',
+                        'wage': '面议',
+                        'addDate': '2013-12-14'
+                    },
+                ]
+            },
+            {
+                'name': '后端',
+                'list': [{
+                        'title': 'PHP工程师',
+                        'firm': '北京创美时代办公家具有限公司 ',
+                        'position': 'PHP后台',
+                        'need': '2人',
+                        'location': '北京海淀',
+                        'experience': '不限',
+                        'education': '不限',
+                        'wage': '面议',
+                        'addDate': '2018-12-14'
+                    },
+                    {
+                        'title': '诚招java开发工程师',
+                        'firm': '北京中新美迪文化发展中心 ',
+                        'position': 'java开发',
+                        'need': '2人',
+                        'location': '东城',
+                        'experience': '不限',
+                        'education': '不限',
+                        'wage': '面议',
+                        'addDate': '2018-11-14'
+                    },
+                    {
+                        'title': 'java工程师',
+                        'firm': '北京华夏安业科技有限公司 ',
+                        'position': 'java后台',
+                        'need': '2人',
+                        'location': '西城',
+                        'experience': '不限',
+                        'education': '不限',
+                        'wage': '面议',
+                        'addDate': '2019-2-14'
+                    }
+                ]
+            }
+        ];
+    </script>
+    <script>
+        function getPos(obj) {
+            var pos = {
+                left: 0,
+                top: 0
+            }
+            //只要条件为 true，循环能够一直执行代码块
+            while (obj) {
+                pos.left += obj.offsetLeft;
+                pos.top += obj.offsetTop;
+                //定位父级offsetParent的定义是：与当前元素最近的经过定位的父级元素
+                obj = obj.offsetParent;
+            }
+            return pos;
+        }
+    </script>
+    <script>
+        window.onload = function () {
+            var header = document.getElementById("header"),
+                listContent = document.getElementById("listContent"),
+                tips = document.getElementById("tips"),
+                tipsContentId = document.getElementById("tipsContent");
+            //生成一级标题
+            for (var i = 0; i < data.length; i++) {
+                var lis = document.createElement("li");
+                lis.innerHTML = data[i].name;
+                header.appendChild(lis);
+            }
+            header.children[0].className = 'focus'; //页面初始一级标题高亮状态
+            //生成二级标题函数
+            function addTitle(index) {
+                var ul = document.createElement("ul");
+                for (var i = 0; i < data[index].list.length; i++) {
+                    var lis = document.createElement("li");
+                    lis.innerHTML = '<a href="javascript:;">' + data[index].list[i].title + '</a>';
+                    ul.appendChild(lis);
+                }
+                listContent.innerHTML = '';
+                listContent.appendChild(ul);
+                ul.className = 'list';
+            }
+            //初始化页面
+            addTitle(0);
+            showTitle(0);
+            //生成二级标题操作
+            for (var i = 0; i < header.children.length; i++) {
+                header.children[i].index = i;
+                header.children[i].onclick = function () {
+                    //更改一级标题样式
+                    for (var i = 0; i < header.children.length; i++) {
+                        header.children[i].className = '';
+                    }
+                    this.className = 'focus';
+                    //生成对应的二级标题
+                    addTitle(this.index);
+                    showTitle(this.index);
+                }
+            }
+            //生成悬浮窗的函数
+            function showTips(title) {
+                //确定悬浮窗位置
+                var pos = getPos(title);
+                //Document.documentElement 是一个会返回文档对象（document）的根元素的只读属性（如HTML文档的 <html> 元素）
+                if (pos.top - 120 > document.body.scrollTop + document.documentElement.clientHeight - 220) {
+                    tips.style.top = document.body.scrollTop + document.documentElement.clientHeight - 220 + 'px';
+                } else {
+                    tips.style.top = pos.top - 120 + 'px';
+                }
+                if (pos.top - 120 < document.body.scrollTop) {
+                    tips.style.top = document.body.scrollTop + 10 + 'px';
+                }
+                tips.style.left = pos.left + title.offsetWidth + 20 + 'px';
+            }
+            //生成悬浮窗中的内容函数
+            function tipsContent(m, n) {
+                tipsContentId.innerHTML = '';
+                var ul = document.createElement("ul");
+                var str = '<li><h2>' + data[m].list[n].firm +
+                    '</h2></li><li class="item"><span style="font-weight:bold">职位:</span><span>' +
+                    data[m].list[n].position +
+                    '</span></li><li class="item"><span style="font-weight:bold">招聘人数:</span><span>' +
+                    data[m].list[n].need +
+                    '</span></li><li class="item"><span style="font-weight:bold;">工作地点:</span><span>' +
+                    data[m].list[n].location +
+                    '</span></li><li class="item"><span style="font-weight:bold;">工作经历:</span><span>' +
+                    data[m].list[n].experience +
+                    '</span></li><li class="item"><span style="font-weight:bold;">学历:</span><span>' +
+                    data[m].list[n].education +
+                    '</span></li><li class="item"><span style="font-weight:bold;"薪资:</span><span>' +
+                    data[m].list[n].wage + '</span></li>';
+                ul.innerHTML = str;
+                tipsContentId.appendChild(ul);
+            }
+            //鼠标悬浮事件函数
+            function showTitle(idx) {
+                var list = listContent.getElementsByTagName("ul")[0],
+                    title = list.getElementsByTagName("a");
+                for (var i = 0; i < title.length; i++) {
+                    title[i].index = i;
+                    title[i].onmouseover = function () {
+                        tips.style.display = 'block';
+                        showTips(this);
+                        tipsContent(idx, this.index);
+                    }
+                    title[i].onmouseout = function () {
+                        tips.style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <ul id="header"></ul>
+
+        <div id="listContent"></div>
+    </div>
+
+    <div id="tips">
+        <span id="arrow"></span>
+        <div id="tipsContent"></div>
+    </div>
+</body>
+
+</html>
