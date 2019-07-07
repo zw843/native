@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,div,ul,li{margin:0;padding:0;}
+ul{list-style-type:none;}
+body{background:#000;text-align:center;font:12px/20px Arial;}
+#box{position:relative;width:492px;height:172px;background:#fff;border-radius:5px;border:8px solid #fff;margin:50px auto;cursor:pointer;}
+#box .list{position:relative;width:490px;height:170px;overflow:hidden;}
+#box .list ul{position:absolute;top:0;left:0;}
+#box .list li{width:490px;height:170px;overflow:hidden;}
+#box .count{position:absolute;right:0;bottom:5px;}
+#box .count li{color:#fff;float:left;width:20px;height:20px;cursor:pointer;margin-right:5px;overflow:hidden;background:#F90;opacity:0.7;filter:alpha(opacity=70);border-radius:20px;}
+#box .count li.now{color:#fff;opacity:1;filter:alpha(opacity=100);font-weight:700;background:#f60;}
+#tmp{width:100px;height:100px;background:red;position:absolute;}
+    </style>
+    <script>
+        window.onload = function(){
+            var box = document.getElementById("box");
+            var list = box.getElementsByTagName("ul")[0];
+            var imgs = box.getElementsByTagName("img");
+            var timer = playTimer = null;
+            var index = i = 0;
+            var flag = true;
+            var temp = [];
+            var btn = null;
+            //生成数字按钮 添加最后一项 push()方法
+            for(i = 0; i < imgs.length; i++) temp.push("<li>" + (i + 1) + "</li>");
+            //插入元素
+            var count = document.createElement("ul");
+            count.className = 'count';
+            //join() 方法用于把数组中的所有元素放入一个字符串。元素是通过指定的分隔符进行分隔的
+            count.innerHTML = temp.join("");
+            box.appendChild(count);
+            btn = box.getElementsByTagName("ul")[1].getElementsByTagName("li");
+            //初始化状态
+            cutover();
+            //按钮点击切换
+            for(i = 0; i < btn.length;i++){
+                btn[i].index = i;
+                btn[i].onmouseover = function(){
+                    index = this.index;
+                    cutover();
+                }
+            }
+            function cutover(){
+                for(i = 0; i < btn.length;i++) btn[i].className = "";
+                btn[index].className = 'now';
+                startMove(-(index * imgs[0].offsetHeight));
+            }
+            function next(){
+                flag ? index++ : index--;
+                index <= 0 && (index = 0,flag = true);
+                index >= btn.length - 1 && (index = btn.length - 1,flag = false);
+                cutover();
+            }
+            playTimer = setInterval(next,2000);
+            //鼠标移入展示区停止自动播放
+            box.onmouseover = function(){
+                clearInterval(playTimer);
+            };
+            //鼠标离开展示区开始自动播放
+            box.onmouseout = function(){
+                playTimer = setInterval(next,2000)
+            };
+            function startMove(target){
+               clearInterval(timer);
+               timer = setInterval(function(){
+                   doMove(target)
+               },50)
+            }
+            function doMove(target){
+                var speed = (target - list.offsetTop) / 10;
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                list.offsetTop == target ? clearInterval(timer) : list.style.top = list.offsetTop + speed + 'px';
+            }
+        }
+    </script>
+</head>
+<body>
+        <div id="box">
+                <div class="list">
+                    <ul>
+                        <li><img src="img/01.jpg" width="490" height="170" /></li>
+                        <li><img src="img/02.jpg" width="490" height="170" /></li>
+                        <li><img src="img/03.jpg" width="490" height="170" /></li>
+                        <li><img src="img/04.jpg" width="490" height="170" /></li>
+                        <li><img src="img/05.jpg" width="490" height="170" /></li>
+                    </ul>
+                </div>
+            </div>
+            
+</body>
+</html>

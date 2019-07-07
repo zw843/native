@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0
+        }
+
+        #box {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            text-align: center;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var box = document.getElementById("box");
+            var imgs = box.getElementsByTagName("img");
+            var arr = [];
+            var i = 0;
+            //保持原宽度 设置当前宽度
+            for(i = 0; i < imgs.length; i++){
+                //  //   offsetWidth = width + 左右padding + 左右boder
+               arr.push(imgs[i].offsetWidth);
+                imgs[i].width = parseInt(imgs[i].offsetWidth/2)
+            };
+            //鼠标移动事件
+            document.onmousemove = function(event){
+                var event = event || window.event;
+                for(i = 0; i < imgs.length; i++){
+            //clientX 事件属性返回当事件被触发时鼠标指针相对于浏览器页面（或当前窗口）的水平坐标。
+            //offsetLeft 获取当前元素到 定位父节点 的left方向的距离
+                    var a = event.clientX - imgs[i].offsetLeft - imgs[i].offsetWidth / 2;
+                    var b = event.clientY - imgs[i].offsetTop - box.offsetTop - imgs[i].offsetHeight / 2;
+                    //Math.sqrt() 方法可返回一个数的平方根
+                    //var c=Math.sqrt(9); 输出3
+                    var scale = 1 - Math.sqrt( a * a + b * b) / 300;
+                    if(scale < 0.5) scale = 0.5;
+                    imgs[i].width = arr[i] * scale;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <img src="img/1.png" />
+        <img src="img/2.png" />
+        <img src="img/3.png" />
+        <img src="img/4.png" />
+        <img src="img/5.png" />
+        <img src="img/6.png" />
+        <img src="img/7.png" />
+        <img src="img/8.png" />
+    </div>
+
+</body>
+
+</html>

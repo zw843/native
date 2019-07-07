@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #iphone {
+            position: relative;
+            width: 426px;
+            height: 640px;
+            margin: 10px auto;
+            background: url(http://fgm.cc/iphone/1.jpg) no-repeat;
+        }
+
+        #lock {
+            position: absolute;
+            left: 50%;
+            bottom: 33px;
+            width: 358px;
+            height: 62px;
+            margin-left: -179px;
+        }
+
+        #lock span {
+            position: absolute;
+            width: 93px;
+            height: 62px;
+            cursor: pointer;
+            background: url(http://fgm.cc/iphone/btn.jpg) no-repeat;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var iphone = document.getElementById("iphone");
+            var lock = document.getElementById("lock");
+            var btn = lock.getElementsByTagName("span")[0];
+            var x = 0;
+            //clientWidth表示元素的内部宽度 水平方向 clientWidth = width + 左右padding
+            //   offsetWidth = width + 左右padding + 左右boder
+            var maxL = lock.clientWidth - btn.offsetWidth;
+            var bg = document.createElement("img");
+            bg.src = "http://fgm.cc/iphone/2.jpg";//预加载下第二张背景
+            btn.onmousedown = function(e){
+                var e = e || window.event;
+                //clientX 事件属性返回当事件被触发时鼠标指针相对于浏览器页面（或当前窗口）的水平坐标。
+                //offsetLeft 获取当前元素到 定位父节点 的left方向的距离
+                x = e.clientX - this.offsetLeft;
+                document.onmousemove = function(e){
+                    var e = e || window.event;
+                    var l = e.clientX - x;
+                    l < 0 && (l = 0);
+                    l > maxL && (l = maxL);
+                    btn.style.left = l + 'px';
+                    btn.offsetLeft == maxL && (iphone.style.background = "url(" + bg.src +")",lock.style.display = "none");
+                    return false;
+                }
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    //document.releaseCapture() 一旦释放鼠标捕获，鼠标事件将不再全部被定向到启用了鼠标捕获的元素。
+                    btn.releaseCapture && btn.releaseCapture();
+                    btn.offsetLeft > maxL / 2 ?
+                    startMove(maxL,function(){
+                        iphone.style.background = "url(" + bg.src +")";
+                        lock.style.display = 'none';
+                    }):
+                    startMove(0);
+                };
+                this.setCapture && this.setCapture();
+                return false;
+            };
+            function startMove(target,fnEnd){
+                clearInterval(btn.timer);
+                btn.timer = setInterval(function(){
+                    doMove(target,fnEnd)
+                },50)
+            }
+            function doMove(target,fnEnd){
+                var speed = (target - btn.offsetLeft) / 5;
+                //Math.ceil() === 向上取整
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                target == btn.offsetLeft ? (clearInterval(btn.timer),fnEnd && fnEnd()) : btn.style.left = speed +
+                btn.offsetLeft + 'px';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="iphone">
+        <div id="lock"><span></span></div>
+    </div>
+
+</body>
+
+</html>

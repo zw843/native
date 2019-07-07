@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            color: #999;
+            font: 12px/1.5 Tahoma;
+        }
+
+        #box {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        #box input {
+            padding: 3px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            width: 220px;
+            margin-right: 10px;
+        }
+
+        .sum {
+            font-size: 30px;
+            color: tan;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var btn = document.getElementsByTagName("button")[0];
+            var input = document.getElementsByTagName("input")[0];
+            var strong = document.getElementsByTagName("strong")[0];
+            //onkeyup 事件会在键盘按键被松开时发生
+            input.onkeyup = function () {
+                //replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。
+                this.value = this.value.replace(/[^(\d)|(,)]/, "");
+            }
+            btn.onclick = function () {
+                var sum = 0;
+                //split() 方法用于把一个字符串分割成字符串数组
+                var input = document.getElementsByTagName("input")[0].value.split(",");
+                for (var s in input) {
+                    sum += parseInt(input[s]);
+                }
+                strong.innerHTML = sum;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <label><input type="text"
+                placeholder="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" /><span>输入数字求和，数字之间用半角","号分隔</span></label>
+        <p><button>求和</button></p>
+        <strong class="sum"></strong>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        ul,
+        li,
+        button {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: 12px/1.5 Tahoma;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #box {
+            width: 70px;
+            margin: 10px auto;
+        }
+
+        #ul {
+            margin-top: 5px;
+            background: #fff;
+            border: 1px solid #9a99ff;
+            display: none;
+        }
+
+        #ul li {
+            width: 100%;
+            line-height: 24px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #close {
+            border-top: 1px solid #9a99ff;
+        }
+
+        #ul li a {
+            color: #00c;
+            padding: 0 5px;
+            display: block;
+            text-decoration: none;
+        }
+
+        #ul li a:hover {
+            background: #d9e1f6;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var btn =   document.getElementsByTagName("button")[0];
+            var ul = document.getElementById("ul");
+            var close = document.getElementById("close");
+            var style = ul.style;
+            btn.onclick = function(){
+                style.display = style.display == 'block' ? 'none' : 'block';
+            }
+            close.onclick = function(){
+                style.display = 'none';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <button>输入法</button>
+        <ul id="ul">
+            <li><a href="javascript:;">手写</a></li>
+            <li><a href="javascript:;">拼音</a></li>
+            <li id="close"><a href="javascript:;">关闭</a></li>
+        </ul>
+    </div>
+
+</body>
+
+</html>

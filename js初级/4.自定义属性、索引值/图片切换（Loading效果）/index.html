@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        div,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        body {
+            font: 12px/1.5 \5fae\8f6f\96c5\9ed1;
+            background: #000;
+        }
+
+        #box {
+            position: relative;
+            width: 800px;
+            height: auto !important;
+            height: 400px;
+            min-height: 400px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        #title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            color: #fff;
+            opacity: 0.7;
+            filter: alpha(opacity=70);
+            font-size: 20px;
+            height: 50px;
+        }
+
+        #title span {
+            padding: 0 5px;
+            line-height: 50px;
+            display: block;
+        }
+
+        #box.loading {
+            background: url(img/loading.gif) 50% 50% no-repeat;
+        }
+
+        #arrow_L,
+        #arrow_R {
+            position: absolute;
+            top: 0;
+            width: 400px;
+            height: 100%;
+            cursor: pointer;
+            background: #f0f0f0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        #arrow_L {
+            left: 0;
+        }
+
+        #arrow_R {
+            right: 0;
+        }
+
+        #btn_L,
+        #btn_R {
+            position: absolute;
+            top: 50%;
+            margin-top: -40px;
+            width: 39px;
+            height: 80px;
+            overflow: hidden;
+            cursor: pointer;
+            text-indent: -9999px;
+            background: url(img/btn.png) no-repeat;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        #btn_L {
+            left: 10px;
+            background-position: 0 0;
+        }
+
+        #btn_R {
+            right: 10px;
+            background-position: -39px 0;
+        }
+    </style>
+    <script>
+        function getStyle(obj,attr){ return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj,null)[attr]}
+        window.onload = function(){
+            var box = document.getElementById("box");
+            var arrowL = document.getElementById("arrow_L");
+            var arrowR = document.getElementById("arrow_R");
+            var btnL = document.getElementById("btn_L");
+            var btnR = document.getElementById("btn_R");
+            var title = document.getElementById("title");
+            var span = title.getElementsByTagName("span")[0];
+            var now = 0;
+            var data = [
+            {"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/106/238/825/53706421.jpg", "title" : "7月26日，吊车将事故现场的车头残片吊至大型运输车辆上。"},
+		{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/105/238/825/53706420.jpg", "title" : "7月26日，一辆大卡车准备驶离事故现场。"},
+		{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/101/238/825/53706416.jpg", "title" : "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"},
+		{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/99/238/825/53706414.jpg", "title" : "7月26日，一名工人在事故现场最后一节车厢上作业。"},
+		{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/100/238/825/53706415.jpg", "title" : "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"}
+
+            ];
+            arrowL.onmouseover = btnL.onmouseover = function(){
+                startMove(btnL,'opacity',100)
+            };
+            arrowL.onmouseout = btnL.onmouseout = function(){
+                startMove(btnL,'opacity',0)
+            };
+            arrowR.onmouseover = btnR.onmouseover = function(){
+                startMove(btnR,'opacity',100);
+            };
+            arrowR.onmouseout = btnR.onmouseout = function(){
+                startMove(btnR,'opacity',0);
+            };
+            function startMove(obj,attr,target,fnEnd){
+                clearInterval(obj.timer);
+                obj.timer = setInterval(function(){
+                    doMove(obj,attr,target,fnEnd)
+                },50);
+            }
+            function doMove(obj,attr,target,fnEnd){
+                //parseFloat() 函数可解析一个字符串，并返回一个浮点数。
+                var a = parseFloat(getStyle(obj,attr));
+                if(attr == 'opacity'){
+                    a = parseInt(a * 100);
+                }
+                var speed = (target - a) /5;
+                // Math.ceil() === 向上取整 Math.floor() === 向下取整
+                speed = speed > 0 ? Math.ceil(speed):Math.floor(speed);
+                if(target == a){
+                    clearInterval(obj.timer);
+                    fnEnd && fnEnd();
+                }else{
+                    if(attr == 'opacity'){
+                        obj.style.opacity = (a + speed)/100;
+                    }else{
+                        obj.style[attr] = a + speed + 'px';
+                    }
+                }
+            }
+            btnL.onclick = function(){
+                if(now <= 0){
+                    alert('这是最后一张图片');
+                    return;
+                }
+                now--;
+                loadImg();
+            };
+            btnR.onclick = function(){
+                if(now >= data.length - 1){
+                    alert('这是最后一张图片');
+                    return;
+                }
+                now++;
+                loadImg();
+            }
+            loadImg();
+            function loadImg(){
+                box.className = 'loading';
+                span.style.opacity = title.style.heigth = 0;
+                var imgs = box.getElementsByTagName("img");
+                imgs[0] && box.removeChild(imgs[0]);
+                var temp = document.createElement("img");
+                var newImg = new Image();
+                newImg.onload = function(){
+                    box.className = '';
+                    temp.src = this.src;
+                    box.appendChild(temp);
+                    temp.style.width = (temp.offsetWidth > 800 ? 800 : temp.offsetWidth) + 'px';
+                    box.style.heigth = temp.style.heigth = temp.offsetHeight * temp.offsetWidth/temp.offsetWidth + 'px';
+                    span.innerHTML = data[now].title;
+                    startMove(title,"height",50,function(){
+                        startMove(title.childNodes[0],'opacity',100)
+                    })
+                };
+                newImg.src = data[now].imgSrc;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="box">
+        <div id="arrow_L"></div>
+        <div id="arrow_R"></div>
+        <div id="btn_L">左</div>
+        <div id="btn_R">右</div>
+        <div id="title"><span></span></div>
+    </div>
+
+</body>
+
+</html>

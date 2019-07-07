@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 330px;
+            height: 100px;
+            margin: 10px auto;
+        }
+
+        #box div {
+            float: left;
+            width: 100px;
+            height: 100px;
+            margin: 0 5px;
+            background: tan;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var div = document.getElementById("box").getElementsByTagName("div");
+            var btn = document.getElementsByTagName("button")[0];
+            btn.onclick = function(){
+                for(var i = 0; i < div.length;i++) div[i].style.background = 'red';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <center><button>点击将DIV变成红色</button></center>
+    <div id="box">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+</body>
+
+</html>
